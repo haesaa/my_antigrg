@@ -1,0 +1,460 @@
+{
+    "version": "1.1",
+    "analysis": [
+        {
+            "file": "1_world_builder.md",
+            "source": "prompts_claude/01_creation/resources/",
+            "summary": [
+                "세계관 생성 에이전트",
+                "금제 규칙(CAUTION) 및 장르 설정"
+            ],
+            "blocks": [
+                {
+                    "section": "세계관 설계",
+                    "migrate": true,
+                    "rag_code": "B3",
+                    "reason": "창작 파트 세계관 템플릿"
+                },
+                {
+                    "section": "금제사항",
+                    "migrate": true,
+                    "rag_code": "A6",
+                    "reason": "공통 보안/제약 규칙"
+                }
+            ],
+            "duplicates": [],
+            "new_files_needed": [
+                {
+                    "code": "B3",
+                    "action": "fill_stub"
+                }
+            ]
+        },
+        {
+            "file": "2_personality_designer.md",
+            "source": "prompts_claude/01_creation/resources/",
+            "summary": [
+                "캐릭터 성격 설계 워크플로우",
+                "심리학 기반 특성 배열",
+                "BDSM/애착 등 심층 성향"
+            ],
+            "blocks": [
+                {
+                    "section": "성격 유형론",
+                    "migrate": true,
+                    "rag_code": "E1",
+                    "reason": "심리학 기초"
+                },
+                {
+                    "section": "캐릭터 디자인 구조",
+                    "migrate": true,
+                    "rag_code": "B2",
+                    "reason": "캐릭터 설계 프레임"
+                },
+                {
+                    "section": "UNSAFE 친밀 성향",
+                    "migrate": true,
+                    "rag_code": "E2",
+                    "reason": "성학(Sexology) 및 한계선 설계"
+                }
+            ],
+            "duplicates": [
+                {
+                    "with": "char-psychology-ref.md",
+                    "overlap": "70%",
+                    "topic": "성격 유형론"
+                }
+            ],
+            "new_files_needed": [
+                {
+                    "code": "E1",
+                    "action": "fill_stub"
+                },
+                {
+                    "code": "B2",
+                    "action": "fill_stub"
+                },
+                {
+                    "code": "E2",
+                    "action": "fill_stub"
+                }
+            ]
+        },
+        {
+            "file": "romance_guide.md",
+            "source": "prompts_claude/01_creation/resources/",
+            "summary": [
+                "로맨스 문체론 및 기법 가이드",
+                "장르별 수사법"
+            ],
+            "blocks": [
+                {
+                    "section": "플롯 기법",
+                    "migrate": true,
+                    "rag_code": "B7",
+                    "reason": "서사 기법 코드북"
+                },
+                {
+                    "section": "글쓰기 스타일",
+                    "migrate": true,
+                    "rag_code": "B1",
+                    "reason": "문체/서술 지침"
+                },
+                {
+                    "section": "로맨스 규칙",
+                    "migrate": true,
+                    "rag_code": "B8",
+                    "reason": "신규 분리 로맨스 문법"
+                }
+            ],
+            "duplicates": [
+                {
+                    "with": "narrative-technique-ref.md",
+                    "overlap": "60%",
+                    "topic": "플롯 기법"
+                }
+            ],
+            "new_files_needed": [
+                {
+                    "code": "B8",
+                    "action": "create"
+                }
+            ]
+        },
+        {
+            "file": "typology_reference.md",
+            "source": "prompts_claude/01_creation/resources/",
+            "summary": [
+                "MBTI, 에니어그램 등 심리 유형 레퍼런스"
+            ],
+            "blocks": [
+                {
+                    "section": "심리 유형 레퍼런스",
+                    "migrate": true,
+                    "rag_code": "E3",
+                    "reason": "유형학 도구 모음"
+                }
+            ],
+            "duplicates": [
+                {
+                    "with": "char-psychology-ref.md",
+                    "overlap": "80%",
+                    "topic": "MBTI/에니어그램 요약"
+                }
+            ],
+            "new_files_needed": [
+                {
+                    "code": "E3",
+                    "action": "fill_stub"
+                }
+            ]
+        },
+        {
+            "file": "3_visual_designer.md",
+            "source": "prompts_claude/02_production/resources/",
+            "summary": [
+                "외형 시각화 및 프롬프트 생성"
+            ],
+            "blocks": [
+                {
+                    "section": "비주얼 생성",
+                    "migrate": true,
+                    "rag_code": "C3",
+                    "reason": "시네마토그래피/비주얼 연출"
+                }
+            ],
+            "duplicates": [],
+            "new_files_needed": [
+                {
+                    "code": "C3",
+                    "action": "fill_stub"
+                }
+            ]
+        },
+        {
+            "file": "5_keyword_creator.md",
+            "source": "prompts_claude/02_production/resources/",
+            "summary": [
+                "키워드 북 생성"
+            ],
+            "blocks": [
+                {
+                    "section": "시스템 프롬프트 구성",
+                    "migrate": true,
+                    "rag_code": "D2",
+                    "reason": "프롬프트 내 키워드 구성 모델링"
+                }
+            ],
+            "duplicates": [],
+            "new_files_needed": [
+                {
+                    "code": "D2",
+                    "action": "fill_stub"
+                }
+            ]
+        },
+        {
+            "file": "6_scenario_writer.md",
+            "source": "prompts_claude/02_production/resources/",
+            "summary": [
+                "시나리오 생성 기법"
+            ],
+            "blocks": [
+                {
+                    "section": "시나리오 설계",
+                    "migrate": true,
+                    "rag_code": "B6",
+                    "reason": "대화/시나리오 작성 템플릿"
+                }
+            ],
+            "duplicates": [],
+            "new_files_needed": [
+                {
+                    "code": "B6",
+                    "action": "fill_stub"
+                }
+            ]
+        },
+        {
+            "file": "7_example_dialogue.md",
+            "source": "prompts_claude/02_production/resources/",
+            "summary": [
+                "대화 예시 작성 규칙"
+            ],
+            "blocks": [
+                {
+                    "section": "대화 패턴",
+                    "migrate": true,
+                    "rag_code": "B6",
+                    "reason": "예시 대화 및 패턴"
+                }
+            ],
+            "duplicates": [],
+            "new_files_needed": []
+        },
+        {
+            "file": "8_play_guide.md",
+            "source": "prompts_claude/02_production/resources/",
+            "summary": [
+                "플레이 가이드 작성"
+            ],
+            "blocks": [
+                {
+                    "section": "가이드라인",
+                    "migrate": true,
+                    "rag_code": "B4",
+                    "reason": "클리셰/유저 응대 가이드"
+                }
+            ],
+            "duplicates": [],
+            "new_files_needed": [
+                {
+                    "code": "B4",
+                    "action": "fill_stub"
+                }
+            ]
+        },
+        {
+            "file": "9_quality_reviewer.md",
+            "source": "prompts_claude/02_production/resources/",
+            "summary": [
+                "전체 품질 심사 기준"
+            ],
+            "blocks": [
+                {
+                    "section": "리뷰 기준",
+                    "migrate": true,
+                    "rag_code": "D3",
+                    "reason": "품질 검증 프롬프트 규칙"
+                }
+            ],
+            "duplicates": [],
+            "new_files_needed": [
+                {
+                    "code": "D3",
+                    "action": "fill_stub"
+                }
+            ]
+        },
+        {
+            "file": "10_condenser_reviewer.md",
+            "source": "prompts_claude/03_condenser/resources/",
+            "summary": [
+                "축약된 프롬프트 품질 심사"
+            ],
+            "blocks": [
+                {
+                    "section": "축약 평가 기준",
+                    "migrate": true,
+                    "rag_code": "D3",
+                    "reason": "LLM 평가 기준 병합"
+                }
+            ],
+            "duplicates": [],
+            "new_files_needed": []
+        },
+        {
+            "file": "4_prompt_condenser.md",
+            "source": "prompts_claude/03_condenser/resources/",
+            "summary": [
+                "프롬프트 압축 템플릿 및 규칙"
+            ],
+            "blocks": [
+                {
+                    "section": "모델 압축 지시어",
+                    "migrate": true,
+                    "rag_code": "D1",
+                    "reason": "Small Model / 최적화 프롬프트"
+                }
+            ],
+            "duplicates": [],
+            "new_files_needed": [
+                {
+                    "code": "D1",
+                    "action": "fill_stub"
+                }
+            ]
+        },
+        {
+            "file": "gate-criteria.md",
+            "source": "outomidea/1.music_video/references/",
+            "summary": [
+                "Outomidea 게이트 통과 기준"
+            ],
+            "blocks": [
+                {
+                    "section": "품질 게이트",
+                    "migrate": true,
+                    "rag_code": "C2",
+                    "reason": "미디어 생성 품질 기준"
+                }
+            ],
+            "duplicates": [],
+            "new_files_needed": [
+                {
+                    "code": "C2",
+                    "action": "fill_stub"
+                }
+            ]
+        },
+        {
+            "file": "REFERENCE-prompt-and-frame-guide.md",
+            "source": "outomidea/1.music_video/references/",
+            "summary": [
+                "Outomidea 프레임/조명/카메라 가이드"
+            ],
+            "blocks": [
+                {
+                    "section": "비주얼 연출",
+                    "migrate": true,
+                    "rag_code": "C3",
+                    "reason": "카메라/조명 프롬프트 가이드"
+                }
+            ],
+            "duplicates": [],
+            "new_files_needed": []
+        },
+        {
+            "file": "mcp-registry.md",
+            "source": "outomidea/1.music_video/references/",
+            "summary": [
+                "MCP 등록 규칙 가이드"
+            ],
+            "blocks": [
+                {
+                    "section": "플러그인/도구 트리거",
+                    "migrate": true,
+                    "rag_code": "C1",
+                    "reason": "파이프라인 MCP 레지스트리"
+                }
+            ],
+            "duplicates": [],
+            "new_files_needed": [
+                {
+                    "code": "C1",
+                    "action": "fill_stub"
+                }
+            ]
+        },
+        {
+            "file": "narrative-technique-ref.md",
+            "source": "outomidea/1.music_video/references/",
+            "summary": [
+                "내러티브 서사 기법"
+            ],
+            "blocks": [
+                {
+                    "section": "서사 기법",
+                    "migrate": true,
+                    "rag_code": "B7",
+                    "reason": "기법 모음"
+                }
+            ],
+            "duplicates": [
+                {
+                    "with": "romance_guide.md",
+                    "overlap": "60%",
+                    "topic": "서사 플롯 제어"
+                }
+            ],
+            "new_files_needed": []
+        },
+        {
+            "file": "char-psychology-ref.md",
+            "source": "outomidea/1.music_video/references/",
+            "summary": [
+                "캐릭터 심리 요약본"
+            ],
+            "blocks": [
+                {
+                    "section": "성격 유형",
+                    "migrate": true,
+                    "rag_code": "E1",
+                    "reason": "심리학"
+                }
+            ],
+            "duplicates": [
+                {
+                    "with": "typology_reference.md",
+                    "overlap": "80%",
+                    "topic": "MBTI/에니어그램 요약"
+                }
+            ],
+            "new_files_needed": []
+        },
+        {
+            "file": "model_profiles.md",
+            "source": "prompts_claude/shared/",
+            "summary": [
+                "모델별 프로필 특성"
+            ],
+            "blocks": [
+                {
+                    "section": "모델 튜닝 편향 극복",
+                    "migrate": true,
+                    "rag_code": "D2",
+                    "reason": "대형 모델 튜닝가이드"
+                }
+            ],
+            "duplicates": [],
+            "new_files_needed": []
+        },
+        {
+            "file": "safety_rules.md",
+            "source": "prompts_claude/shared/",
+            "summary": [
+                "세이프티 가이드 심화"
+            ],
+            "blocks": [
+                {
+                    "section": "안전",
+                    "migrate": true,
+                    "rag_code": "A1",
+                    "reason": "보안 수칙"
+                }
+            ],
+            "duplicates": [],
+            "new_files_needed": []
+        }
+    ]
+}

@@ -1,0 +1,41 @@
+{
+    "$schema": "timeline schema v1.0",
+    "_description": "비트 싱크 타임라인 스키마. T5(06-edit-compose.md)에서 생성.",
+    "source_audio": "",
+    "total_duration_sec": 0.0,
+    "bpm": 0,
+    "beat_snap_threshold_ms": 50,
+    "timeline": [
+        {
+            "scene_id": "scene_01",
+            "clip_path": "work/T3-clips/scene-01.mp4",
+            "start_sec": 0.0,
+            "end_sec": 0.0,
+            "duration_sec": 0.0,
+            "beat_snap_point": 0.0,
+            "transition_in": "fade_in",
+            "transition_out": "crossfade",
+            "transition_duration_sec": 0.5,
+            "audio_volume_db": 0
+        }
+    ],
+    "audio_tracks": [
+        {
+            "track_id": "bgm",
+            "file_path": "work/T4-audio/bgm.mp3",
+            "volume_db": 0,
+            "start_sec": 0.0,
+            "end_sec": 0.0,
+            "fade_in_sec": 0.5,
+            "fade_out_sec": 1.0
+        }
+    ],
+    "render_settings": {
+        "resolution": "1920x1080",
+        "fps": 30,
+        "video_codec": "H.264",
+        "audio_codec": "AAC",
+        "bitrate_mbps": 10,
+        "output_path": "work/T5-edit/composed.mp4"
+    }
+}

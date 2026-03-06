@@ -1,0 +1,167 @@
+{
+    "$schema": "scenes schema v2.0",
+    "_description": "장면 시놉시스 스키마 v2. T1(02-analyze.md)에서 생성. 프레임 분석 + 캐릭터 참조 + 의상 연속성 지원.",
+    "project_mode": "P2",
+    "total_scenes": 9,
+    "total_duration_sec": 0.0,
+    "narrative_arc": "",
+    "characters": [
+        {
+            "character_id": "female_lead",
+            "display_name": "여주인공",
+            "profile_path": "character-profiles/female_lead.json",
+            "ref_images": {
+                "front_full": "char-ref/front-full.jpg",
+                "back_full": "char-ref/back-full.jpg",
+                "face_front": "char-ref/face-front.jpg",
+                "face_3q_left": "char-ref/face-3q-left.jpg",
+                "face_3q_right": "char-ref/face-3q-right.jpg",
+                "face_profile": "char-ref/face-profile.jpg"
+            }
+        }
+    ],
+    "scenes": [
+        {
+            "scene_id": "scene_01",
+            "section_ref": "intro",
+            "start_sec": 0.0,
+            "end_sec": 0.0,
+            "duration_sec": 0.0,
+            "frame_analysis": {
+                "source_frame": "conti-frames/frame-01.jpg",
+                "analysis_file": "frame-analysis/frame-01-analysis.json",
+                "subjects": {
+                    "count": 1,
+                    "positions": [
+                        {
+                            "character_id": "female_lead",
+                            "position": "center-right",
+                            "size_ratio": 0.6
+                        }
+                    ]
+                },
+                "composition": "rule-of-thirds-right",
+                "foreground_action": "",
+                "background_description": ""
+            },
+            "camera": {
+                "angle": "eye-level",
+                "movement": "static",
+                "shot_size": "medium",
+                "best_face_ref": "char-ref/face-3q-right.jpg"
+            },
+            "environment": {
+                "location": "",
+                "time_of_day": "morning",
+                "lighting": {
+                    "source": "natural-window",
+                    "color_temperature": "warm",
+                    "direction": "left"
+                },
+                "weather": "clear",
+                "key_props": []
+            },
+            "mood": "",
+            "color_tone": "warm",
+            "characters_in_scene": [
+                {
+                    "character_id": "female_lead",
+                    "outfit_key": "scene_01-03",
+                    "outfit_description": "",
+                    "action": "",
+                    "expression": "",
+                    "facing_direction": "left"
+                }
+            ],
+            "transition_to_next": "crossfade",
+            "time_continuity": "continuous",
+            "motion_intensity": "low",
+            "motion_direction": "",
+            "prompt_file": "prompts/scene-01.txt"
+        }
+    ],
+    "outfit_timeline": [
+        {
+            "outfit_key": "scene_01-03",
+            "scene_range": [
+                1,
+                3
+            ],
+            "description": "",
+            "occasion": ""
+        },
+        {
+            "outfit_key": "scene_04-06",
+            "scene_range": [
+                4,
+                6
+            ],
+            "description": "",
+            "occasion": ""
+        },
+        {
+            "outfit_key": "scene_07-09",
+            "scene_range": [
+                7,
+                9
+            ],
+            "description": "",
+            "occasion": ""
+        }
+    ],
+    "enum_values": {
+        "camera_angles": [
+            "eye-level",
+            "low-angle",
+            "high-angle",
+            "bird-eye",
+            "dutch-angle",
+            "over-shoulder"
+        ],
+        "camera_movements": [
+            "static",
+            "dolly-in",
+            "dolly-out",
+            "pan-left",
+            "pan-right",
+            "tilt-up",
+            "tilt-down",
+            "tracking",
+            "crane",
+            "handheld"
+        ],
+        "shot_sizes": [
+            "extreme-close-up",
+            "close-up",
+            "medium-close-up",
+            "medium",
+            "medium-long",
+            "long",
+            "extreme-long"
+        ],
+        "transitions": [
+            "fade_in",
+            "fade_out",
+            "crossfade",
+            "match_cut",
+            "sharp_cut",
+            "dissolve",
+            "wipe"
+        ],
+        "time_continuity": [
+            "continuous",
+            "time_jump",
+            "location_change",
+            "flashback"
+        ],
+        "compositions": [
+            "rule-of-thirds-left",
+            "rule-of-thirds-right",
+            "center",
+            "symmetric",
+            "diagonal",
+            "leading-lines",
+            "frame-within-frame"
+        ]
+    }
+}

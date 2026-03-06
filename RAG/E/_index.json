@@ -1,0 +1,42 @@
+{
+    "E1": {
+        "file": "E1_personality_psych.md",
+        "topic": "성격 심리학 및 캐릭터 내면 설계",
+        "tokens": 0,
+        "tags": [
+            "psychology",
+            "personality",
+            "character"
+        ],
+        "used_by": [
+            "01_creation",
+            "1.music_video"
+        ]
+    },
+    "E2": {
+        "file": "E2_sexology.md",
+        "topic": "친밀도, 로맨스 및 성적 심향 상세",
+        "tokens": 0,
+        "tags": [
+            "sexology",
+            "intimacy",
+            "relationship"
+        ],
+        "used_by": [
+            "01_creation"
+        ]
+    },
+    "E3": {
+        "file": "E3_typology_tools.md",
+        "topic": "성격 유형론(MBTI, 애니어그램 등) 활용",
+        "tokens": 0,
+        "tags": [
+            "typology",
+            "psychology",
+            "tools"
+        ],
+        "used_by": [
+            "01_creation"
+        ]
+    }
+}

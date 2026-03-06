@@ -1,0 +1,101 @@
+{
+    "B1": {
+        "file": "B1_writing_style.md",
+        "topic": "글쓰기 스타일 및 문체",
+        "tokens": 120,
+        "tags": [
+            "writing_style",
+            "tone"
+        ],
+        "used_by": [
+            "01_creation",
+            "02_production"
+        ]
+    },
+    "B2": {
+        "file": "B2_character_design.md",
+        "topic": "캐릭터 디자인 (외형/성격 등)",
+        "tokens": 0,
+        "tags": [
+            "character",
+            "psychology"
+        ],
+        "used_by": [
+            "01_creation"
+        ]
+    },
+    "B3": {
+        "file": "B3_worldbuilding.md",
+        "topic": "세계관 구축",
+        "tokens": 0,
+        "tags": [
+            "worldbuilding",
+            "setting"
+        ],
+        "used_by": [
+            "01_creation"
+        ]
+    },
+    "B4": {
+        "file": "B4_cliche_library.md",
+        "topic": "클리셰 및 스토리 패턴",
+        "tokens": 0,
+        "tags": [
+            "cliche",
+            "trope"
+        ],
+        "used_by": [
+            "02_production"
+        ]
+    },
+    "B5": {
+        "file": "B5_genre_grammar.md",
+        "topic": "장르별 문법/규칙",
+        "tokens": 100,
+        "tags": [
+            "genre",
+            "writing_style"
+        ],
+        "used_by": [
+            "01_creation",
+            "02_production"
+        ]
+    },
+    "B6": {
+        "file": "B6_dialogue.md",
+        "topic": "대화문 작성",
+        "tokens": 0,
+        "tags": [
+            "dialogue",
+            "script"
+        ],
+        "used_by": [
+            "02_production"
+        ]
+    },
+    "B7": {
+        "file": "B7_technique_codebook.md",
+        "topic": "작법 기법 모음집",
+        "tokens": 140,
+        "tags": [
+            "technique",
+            "writing_style"
+        ],
+        "used_by": [
+            "01_creation",
+            "02_production"
+        ]
+    },
+    "B8": {
+        "file": "B8_romance_rules.md",
+        "topic": "로맨스 전용 규정",
+        "tokens": 0,
+        "tags": [
+            "romance",
+            "relationship"
+        ],
+        "used_by": [
+            "01_creation"
+        ]
+    }
+}

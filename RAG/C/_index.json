@@ -1,0 +1,53 @@
+{
+    "C1": {
+        "file": "C1_mcp_registry.md",
+        "topic": "MCP 시스템 레지스트리 목록",
+        "tokens": 0,
+        "tags": [
+            "mcp",
+            "system"
+        ],
+        "used_by": [
+            "1.music_video"
+        ]
+    },
+    "C2": {
+        "file": "C2_gate_criteria.md",
+        "topic": "게이트 심사 기준 (품질 통과용)",
+        "tokens": 0,
+        "tags": [
+            "gate",
+            "quality",
+            "criteria"
+        ],
+        "used_by": [
+            "1.music_video"
+        ]
+    },
+    "C3": {
+        "file": "C3_genre_cinematography.md",
+        "topic": "장르별 시네마토그래피/카메라 연출",
+        "tokens": 0,
+        "tags": [
+            "cinematography",
+            "camera",
+            "direction"
+        ],
+        "used_by": [
+            "1.music_video"
+        ]
+    },
+    "C4": {
+        "file": "C4_beat_sync.md",
+        "topic": "비트 싱크(음악/영상 연동) 룰",
+        "tokens": 0,
+        "tags": [
+            "beat_sync",
+            "music_video",
+            "rhythm"
+        ],
+        "used_by": [
+            "1.music_video"
+        ]
+    }
+}

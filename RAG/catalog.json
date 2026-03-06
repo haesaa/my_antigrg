@@ -1,0 +1,178 @@
+{
+    "version": "1.1",
+    "sections": {
+        "A": {
+            "name": "규칙/제약",
+            "namespace": "rules"
+        },
+        "B": {
+            "name": "창작",
+            "namespace": "creative"
+        },
+        "C": {
+            "name": "미디어 파이프라인",
+            "namespace": "media"
+        },
+        "D": {
+            "name": "프롬프트 엔지니어링",
+            "namespace": "prompt_eng"
+        },
+        "E": {
+            "name": "심리/성향",
+            "namespace": "psychology"
+        }
+    },
+    "tag_index": {
+        "security": [
+            "A1"
+        ],
+        "rules": [
+            "A1",
+            "A6"
+        ],
+        "system": [
+            "A1",
+            "A6"
+        ],
+        "token": [
+            "A2"
+        ],
+        "meta_output": [
+            "A3"
+        ],
+        "no_delete": [
+            "A4"
+        ],
+        "graceful_exit": [
+            "A5"
+        ],
+        "caution": [
+            "A6"
+        ],
+        "creative": [
+            "B1",
+            "B2",
+            "B3",
+            "B4",
+            "B6",
+            "B7",
+            "B8"
+        ],
+        "writing_style": [
+            "B1",
+            "B5"
+        ],
+        "story": [
+            "B1",
+            "B2",
+            "B3",
+            "B4",
+            "B6",
+            "B7",
+            "B8"
+        ],
+        "character": [
+            "B1",
+            "B2",
+            "B3",
+            "B4",
+            "B6",
+            "B7",
+            "B8"
+        ],
+        "genre": [
+            "B5"
+        ],
+        "psychology": [
+            "B2",
+            "E1",
+            "E2",
+            "E3"
+        ],
+        "worldbuilding": [
+            "B3"
+        ],
+        "cliche": [
+            "B4"
+        ],
+        "dialogue": [
+            "B6"
+        ],
+        "technique": [
+            "B7"
+        ],
+        "romance": [
+            "B8"
+        ],
+        "pipeline": [
+            "C1",
+            "C2",
+            "C3"
+        ],
+        "media": [
+            "C1",
+            "C2",
+            "C3"
+        ],
+        "vision": [
+            "C1",
+            "C2",
+            "C3"
+        ],
+        "mcp": [
+            "C1"
+        ],
+        "gate": [
+            "C2"
+        ],
+        "cinematography": [
+            "C3"
+        ],
+        "beat_sync": [
+            "C4"
+        ],
+        "small_model": [
+            "D1"
+        ],
+        "prompt": [
+            "D1",
+            "D2",
+            "D3"
+        ],
+        "model": [
+            "D1",
+            "D2",
+            "D3"
+        ],
+        "optimization": [
+            "D1",
+            "D2",
+            "D3"
+        ],
+        "large_model": [
+            "D2"
+        ],
+        "review": [
+            "D3"
+        ],
+        "unsafe": [
+            "E1",
+            "E2",
+            "E3"
+        ],
+        "typology": [
+            "E1",
+            "E2",
+            "E3"
+        ],
+        "sexology": [
+            "E2"
+        ]
+    },
+    "pinecone": {
+        "index": "skills-rag",
+        "model": "text-embedding-3-small",
+        "top_k": 5,
+        "threshold": 0.75
+    }
+}

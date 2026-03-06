@@ -1,0 +1,42 @@
+{
+    "D1": {
+        "file": "D1_small_model.md",
+        "topic": "소형 모델 프롬프팅 최적화 전략",
+        "tokens": 0,
+        "tags": [
+            "small_model",
+            "optimization",
+            "prompt_design"
+        ],
+        "used_by": [
+            "03_condenser"
+        ]
+    },
+    "D2": {
+        "file": "D2_large_model.md",
+        "topic": "대형 모델 프롬프팅 최적화 전략",
+        "tokens": 0,
+        "tags": [
+            "large_model",
+            "optimization",
+            "prompt_design"
+        ],
+        "used_by": [
+            "03_condenser"
+        ]
+    },
+    "D3": {
+        "file": "D3_review_criteria.md",
+        "topic": "프롬프트/콘텐츠 리뷰 심사 기준",
+        "tokens": 0,
+        "tags": [
+            "review",
+            "evaluation",
+            "criteria",
+            "prompt_design"
+        ],
+        "used_by": [
+            "03_condenser"
+        ]
+    }
+}

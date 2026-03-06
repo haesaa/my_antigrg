@@ -1,0 +1,74 @@
+{
+    "A1": {
+        "file": "A1_security.md",
+        "topic": "시스템/보안 프롬프트 유의사항",
+        "tokens": 80,
+        "tags": [
+            "security",
+            "system_prompt"
+        ],
+        "used_by": [
+            "global"
+        ]
+    },
+    "A2": {
+        "file": "A2_token_guard.md",
+        "topic": "토큰 제한 설정 가이드",
+        "tokens": 80,
+        "tags": [
+            "token",
+            "guard"
+        ],
+        "used_by": [
+            "global"
+        ]
+    },
+    "A3": {
+        "file": "A3_no_meta_output.md",
+        "topic": "메타 정보 출력 금지",
+        "tokens": 50,
+        "tags": [
+            "meta_output",
+            "security"
+        ],
+        "used_by": [
+            "global"
+        ]
+    },
+    "A4": {
+        "file": "A4_no_delete.md",
+        "topic": "삭제 불가/보존 지침",
+        "tokens": 50,
+        "tags": [
+            "no_delete",
+            "preservation"
+        ],
+        "used_by": [
+            "global"
+        ]
+    },
+    "A5": {
+        "file": "A5_graceful_exit.md",
+        "topic": "우회 종료 및 안전한 처리",
+        "tokens": 60,
+        "tags": [
+            "graceful_exit",
+            "safety"
+        ],
+        "used_by": [
+            "global"
+        ]
+    },
+    "A6": {
+        "file": "A6_caution_creation.md",
+        "topic": "창작/생성 시 유의사항",
+        "tokens": 70,
+        "tags": [
+            "caution",
+            "creation"
+        ],
+        "used_by": [
+            "global"
+        ]
+    }
+}
