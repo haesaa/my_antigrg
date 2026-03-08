@@ -1,0 +1,17 @@
+{
+    "name": "music-analyzer",
+    "version": "1.0.0",
+    "description": "BPM · Key · Camelot · Beat 분석기 - 정적 로컬 웹앱",
+    "scripts": {
+        "start": "npx serve . -p 3333 --no-clipboard",
+        "dev": "npx serve . -p 3333"
+    },
+    "keywords": [
+        "music",
+        "bpm",
+        "key",
+        "camelot",
+        "analyzer"
+    ],
+    "license": "MIT"
+}

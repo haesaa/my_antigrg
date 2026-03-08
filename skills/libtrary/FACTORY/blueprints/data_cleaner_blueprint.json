@@ -1,0 +1,18 @@
+{
+    "skill_name": "data_cleaner",
+    "entry_instruction": "clean_csv",
+    "instructions": [
+        "clean_csv",
+        "validate_schema",
+        "remove_duplicates"
+    ],
+    "guides": [
+        "blueprint_writing_guide",
+        "skill_naming_guide"
+    ],
+    "tools": [
+        "python_exec",
+        "file_read",
+        "file_write"
+    ]
+}

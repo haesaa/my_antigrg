@@ -1,0 +1,30 @@
+{
+    "skill_name": "char_prompts_maker",
+    "version": "1.0.0",
+    "author": "Antigravity",
+    "description": "1_full_prompt.md 및 2_personality_prompt.md의 세계관/캐릭터 외형을 분석하여 NijiJourney 및 NanoBanana2 포맷에 맞춘 이미지 생성용 프롬프트를 자동 작성합니다.",
+    "tags": [
+        "image",
+        "prompt",
+        "niji",
+        "nanobanana",
+        "character"
+    ],
+    "entry_instruction": "generate_char_prompts_instruction",
+    "guides": [
+        "char_prompt_styles_guide",
+        "typology_reference",
+        "psy_love_theories",
+        "psy_motivation_theories",
+        "psy_trauma_defense",
+        "psy_limerence",
+        "psy_nonviolent_communication",
+        "psy_love_and_jealousy",
+        "psy_transactional_analysis",
+        "psy_bl_romance_guide"
+    ],
+    "instructions": [
+        "generate_char_prompts_instruction"
+    ],
+    "tools": []
+}

@@ -1,0 +1,218 @@
+{
+    "version": "1.0",
+    "description": "Instruction Graph - 등록된 모든 Instruction 목록. Validator Rule 4에서 instructions 존재 여부를 확인하는 기준.",
+    "instructions": [
+        {
+            "name": "generate_char_prompts_instruction",
+            "path": "LIBRARY/instructions/generate_char_prompts_instruction.md",
+            "skill": "char_prompts_maker",
+            "is_entry": true,
+            "description": "NijiJourney/Nanobanana2 프롬프트 포맷 규정에 맞추어 이미지 프롬프트를 생성하는 entry instruction"
+        },
+        {
+            "name": "generate_character",
+            "path": "LIBRARY/instructions/generate_character.md",
+            "skill": "character_writer",
+            "is_entry": true,
+            "description": "캐릭터 시트 생성 instruction"
+        },
+        {
+            "name": "calculate_kpi",
+            "path": "LIBRARY/instructions/calculate_kpi.md",
+            "skill": "kpi_manager",
+            "is_entry": true,
+            "description": "KPI 지표 계산 entry instruction"
+        },
+        {
+            "name": "aggregate_metrics",
+            "skill": "kpi_manager",
+            "is_entry": false,
+            "description": "세부 지표 집계 instruction"
+        },
+        {
+            "name": "generate_report",
+            "skill": "kpi_manager",
+            "is_entry": false,
+            "description": "KPI 리포트 생성 instruction"
+        },
+        {
+            "name": "write_blueprint",
+            "path": "LIBRARY/instructions/write_blueprint.md",
+            "skill": "skill_writer",
+            "is_entry": true,
+            "description": "Blueprint 작성 및 파이프라인 실행 instruction"
+        },
+        {
+            "name": "route_skill",
+            "skill": "skill_agent",
+            "is_entry": true,
+            "description": "Registry 기반 Skill 라우팅 instruction"
+        },
+        {
+            "name": "clean_csv",
+            "path": "LIBRARY/instructions/clean_csv.md",
+            "skill": "data_cleaner",
+            "is_entry": true,
+            "description": "CSV 파일 정제 entry instruction (02testcode.md 기반)"
+        },
+        {
+            "name": "validate_schema",
+            "skill": "data_cleaner",
+            "is_entry": false,
+            "description": "CSV 컬럼 스키마 검증 instruction"
+        },
+        {
+            "name": "remove_duplicates",
+            "skill": "data_cleaner",
+            "is_entry": false,
+            "description": "중복 행 제거 instruction"
+        },
+        {
+            "name": "run_harness_orchestrator",
+            "path": "LIBRARY/instructions/run_harness_orchestrator.md",
+            "skill": "harness_orchestrator",
+            "is_entry": true,
+            "description": "Harness Orchestrator 진입점. Agent Teams를 구동하는 메가 역량의 메인 제어 루틴."
+        },
+        {
+            "name": "harness_preflight",
+            "path": "LIBRARY/instructions/harness_preflight.md",
+            "skill": "harness_orchestrator",
+            "is_entry": false,
+            "description": "Harness 환경 초기화 및 Resume 판정 로직"
+        },
+        {
+            "name": "harness_complexity",
+            "path": "LIBRARY/instructions/harness_complexity.md",
+            "skill": "harness_orchestrator",
+            "is_entry": false,
+            "description": "Harness 복잡도 판정, ToT 3분기 및 ToC 채점"
+        },
+        {
+            "name": "harness_analyze",
+            "path": "LIBRARY/instructions/harness_analyze.md",
+            "skill": "harness_orchestrator",
+            "is_entry": false,
+            "description": "MCP Router 및 Instruction Generator 동작 분석"
+        },
+        {
+            "name": "harness_forge",
+            "path": "LIBRARY/instructions/harness_forge.md",
+            "skill": "harness_orchestrator",
+            "is_entry": false,
+            "description": "Harness Skill Forge 진행 로직"
+        },
+        {
+            "name": "harness_verify",
+            "path": "LIBRARY/instructions/harness_verify.md",
+            "skill": "harness_orchestrator",
+            "is_entry": false,
+            "description": "결과 검증 (3단계) 및 Reflection"
+        },
+        {
+            "name": "harness_exit",
+            "path": "LIBRARY/instructions/harness_exit.md",
+            "skill": "harness_orchestrator",
+            "is_entry": false,
+            "description": "분석 및 빌딩 완료 후 Graceful 종료 처리"
+        },
+        {
+            "name": "run_music_video_skill",
+            "path": "LIBRARY/instructions/run_music_video_skill.md",
+            "skill": "music_video_skill",
+            "is_entry": true,
+            "description": "Music Video 생성 스킬의 메인 제어 루틴"
+        },
+        {
+            "name": "mv_preflight",
+            "path": "LIBRARY/instructions/mv_preflight.md",
+            "skill": "music_video_skill",
+            "is_entry": false,
+            "description": "MV 파이프라인 프로젝트 초기화 및 Preflight"
+        },
+        {
+            "name": "mv_input_gate",
+            "path": "LIBRARY/instructions/mv_input_gate.md",
+            "skill": "music_video_skill",
+            "is_entry": false,
+            "description": "입력 검증 및 모드(Story/Direct) 판별 게이트"
+        },
+        {
+            "name": "mv_story_visual_design",
+            "path": "LIBRARY/instructions/mv_story_visual_design.md",
+            "skill": "music_video_skill",
+            "is_entry": false,
+            "description": "SKILL-1A: 스토리 → 비주얼 디자인 및 콘티 생성"
+        },
+        {
+            "name": "mv_story_conti_prompt",
+            "path": "LIBRARY/instructions/mv_story_conti_prompt.md",
+            "skill": "music_video_skill",
+            "is_entry": false,
+            "description": "SKILL-1A: 콘티에 기반한 프롬프트 기초 설계"
+        },
+        {
+            "name": "mv_prompt_generation",
+            "path": "LIBRARY/instructions/mv_prompt_generation.md",
+            "skill": "music_video_skill",
+            "is_entry": false,
+            "description": "SKILL-1B: N컷 프롬프트 매트릭스 본격 생성"
+        },
+        {
+            "name": "mv_clip_edit_assembly",
+            "path": "LIBRARY/instructions/mv_clip_edit_assembly.md",
+            "skill": "music_video_skill",
+            "is_entry": false,
+            "description": "SKILL-2: 클립 분석 및 편집 타임라인/ffmpeg 스크립트 작성"
+        },
+        {
+            "name": "mv_tts_generate",
+            "path": "LIBRARY/instructions/mv_tts_generate.md",
+            "skill": "music_video_skill",
+            "is_entry": false,
+            "description": "오디오 TTS 생성 로직"
+        },
+        {
+            "name": "mv_package",
+            "path": "LIBRARY/instructions/mv_package.md",
+            "skill": "music_video_skill",
+            "is_entry": false,
+            "description": "산출물 패키징"
+        },
+        {
+            "name": "mv_qc_validate",
+            "path": "LIBRARY/instructions/mv_qc_validate.md",
+            "skill": "music_video_skill",
+            "is_entry": false,
+            "description": "최종 QC 검증"
+        },
+        {
+            "name": "mv_graceful_exit",
+            "path": "LIBRARY/instructions/mv_graceful_exit.md",
+            "skill": "music_video_skill",
+            "is_entry": false,
+            "description": "작업 종료 및 로깅 후 파이프라인 완전 종료"
+        },
+        {
+            "name": "run_creation_phase1",
+            "path": "LIBRARY/instructions/run_creation_phase1.md",
+            "skill": "creation_phase1",
+            "is_entry": true,
+            "description": "크랙 프롬프트 생성 (Phase 1) 메인 제어 루틴"
+        },
+        {
+            "name": "creation_world_builder",
+            "path": "LIBRARY/instructions/creation_world_builder.md",
+            "skill": "creation_phase1",
+            "is_entry": false,
+            "description": "1단계: 세계관 빌더 프롬프트 생성"
+        },
+        {
+            "name": "creation_personality_designer",
+            "path": "LIBRARY/instructions/creation_personality_designer.md",
+            "skill": "creation_phase1",
+            "is_entry": false,
+            "description": "2단계: 성격유형 통합 프롬프트 생성"
+        }
+    ]
+}

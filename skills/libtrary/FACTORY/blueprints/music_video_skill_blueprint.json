@@ -1,0 +1,30 @@
+{
+    "skill_name": "music_video_skill",
+    "entry_instruction": "run_music_video_skill",
+    "instructions": [
+        "run_music_video_skill",
+        "mv_preflight",
+        "mv_input_gate",
+        "mv_story_visual_design",
+        "mv_story_conti_prompt",
+        "mv_prompt_generation",
+        "mv_clip_edit_assembly",
+        "mv_tts_generate",
+        "mv_package",
+        "mv_qc_validate",
+        "mv_graceful_exit"
+    ],
+    "guides": [
+        "REFERENCE-prompt-and-frame-guide",
+        "mv_char_psychology_ref",
+        "mv_gate_criteria",
+        "mv_mcp_registry",
+        "mv_narrative_technique_ref",
+        "mv_pipeline_guide"
+    ],
+    "tools": [
+        "python_exec",
+        "file_read",
+        "file_write"
+    ]
+}

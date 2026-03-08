@@ -1,0 +1,151 @@
+{
+    "version": "1.0",
+    "description": "Guide Graph - LIBRARY에 등록된 모든 Guide 목록. Validator Rule 3에서 guides 존재 여부를 확인하는 기준.",
+    "guides": [
+        {
+            "name": "char_prompt_styles_guide",
+            "path": "LIBRARY/guides/char_prompt_styles_guide.md",
+            "description": "NijiJourney 및 NanoBanana2 등 이미지 생성 모델을 위한 프롬프트 가중치 및 태그 백과사전"
+        },
+        {
+            "name": "blueprint_writing_guide",
+            "path": "LIBRARY/guides/blueprint_writing_guide.md",
+            "description": "Blueprint 작성 원칙 및 필수 필드 설명"
+        },
+        {
+            "name": "skill_naming_guide",
+            "path": "LIBRARY/guides/skill_naming_guide.md",
+            "description": "Skill 명명 규칙 및 SKILL.md 구조 설명"
+        },
+        {
+            "name": "validation_rules_guide",
+            "path": "LIBRARY/guides/validation_rules_guide.md",
+            "description": "Validator 5개 룰 상세 설명"
+        },
+        {
+            "name": "REFERENCE-prompt-and-frame-guide",
+            "path": "LIBRARY/guides/REFERENCE-prompt-and-frame-guide.md",
+            "description": "영상/MV 프롬프트 레퍼런스 - 표정·포즈·공간·조명·카메라·SFX·장르별 연출 키워드 전체",
+            "source": "outomidea/1.music_video/references/",
+            "tags": [
+                "visual",
+                "prompt",
+                "camera",
+                "lighting",
+                "music_video"
+            ]
+        },
+        {
+            "name": "romance_guide",
+            "path": "LIBRARY/guides/romance_guide.md",
+            "description": "로맨스 장르별 문체·기법 설계 가이드 v2 - 일상/동양판타지/느와르/로판/회귀/아포칼립스/힐링/공포/비극/현판/BL/GL 11개 장르",
+            "source": "prompts_claude/01_creation/resources/",
+            "tags": [
+                "writing",
+                "romance",
+                "style",
+                "technique",
+                "genre"
+            ]
+        },
+        {
+            "name": "typology_reference",
+            "path": "LIBRARY/guides/typology_reference.md",
+            "description": "캐릭터 성격유형 레퍼런스 - MBTI/에니어그램/애착유형/갈등스타일/사랑의언어/BDSM 조합표",
+            "source": "prompts_claude/01_creation/resources/",
+            "tags": [
+                "character",
+                "MBTI",
+                "enneagram",
+                "personality",
+                "BDSM"
+            ]
+        },
+        {
+            "name": "tot_guide",
+            "path": "LIBRARY/guides/tot_guide.md",
+            "description": "ToT/ToC/Reflection 프레임워크 - Harness Orchestrator 참조",
+            "source": "harness/harness-orchestrator/references/",
+            "tags": [
+                "harness",
+                "tot",
+                "reflection"
+            ]
+        },
+        {
+            "name": "mv_char_psychology_ref",
+            "path": "LIBRARY/guides/mv_char_psychology_ref.md",
+            "description": "캐릭터 심리 기준 참고자료",
+            "source": "outomidea/1.music_video/references"
+        },
+        {
+            "name": "mv_gate_criteria",
+            "path": "LIBRARY/guides/mv_gate_criteria.md",
+            "description": "Gate 통과 기준 가이드",
+            "source": "outomidea/1.music_video/references"
+        },
+        {
+            "name": "mv_mcp_registry",
+            "path": "LIBRARY/guides/mv_mcp_registry.md",
+            "description": "MV 파이프라인 전용 MCP Registry 설정",
+            "source": "outomidea/1.music_video/references"
+        },
+        {
+            "name": "mv_narrative_technique_ref",
+            "path": "LIBRARY/guides/mv_narrative_technique_ref.md",
+            "description": "서사 기법 참고자료",
+            "source": "outomidea/1.music_video/references"
+        },
+        {
+            "name": "mv_pipeline_guide",
+            "path": "LIBRARY/guides/mv_pipeline_guide.md",
+            "description": "MV 파이프라인 한국어 진행 가이드",
+            "source": "outomidea/1.music_video/references"
+        },
+        {
+            "name": "psy_love_theories",
+            "path": "LIBRARY/guides/psy_love_theories.md",
+            "description": "사랑·관계 심리학 이론 가이드 - 가트맨, 채프먼, 스턴버그 통합"
+        },
+        {
+            "name": "psy_motivation_theories",
+            "path": "LIBRARY/guides/psy_motivation_theories.md",
+            "description": "동기부여 및 심리 이론 가이드 - 자기결정성, 접근/회피 동기 통합"
+        },
+        {
+            "name": "psy_trauma_defense",
+            "path": "LIBRARY/guides/psy_trauma_defense.md",
+            "description": "복합 외상후 스트레스 장애(C-PTSD) 및 방어기제 가이드"
+        },
+        {
+            "name": "psy_limerence",
+            "path": "LIBRARY/guides/psy_limerence.md",
+            "description": "리머런스(Limerence) 메커니즘과 극복 치료 가이드"
+        },
+        {
+            "name": "psy_nonviolent_communication",
+            "path": "LIBRARY/guides/psy_nonviolent_communication.md",
+            "description": "비폭력대화(NVC)의 핵심 요소와 실천 가이드"
+        },
+        {
+            "name": "psy_love_and_jealousy",
+            "path": "LIBRARY/guides/psy_love_and_jealousy.md",
+            "description": "사랑과 질투 심리학 - 비교를 넘어 성장의 에너지로"
+        },
+        {
+            "name": "psy_transactional_analysis",
+            "path": "LIBRARY/guides/psy_transactional_analysis.md",
+            "description": "에릭 번의 교류분석(TA) 이론과 집단상담 실무 가이드"
+        },
+        {
+            "name": "psy_bl_romance_guide",
+            "path": "LIBRARY/guides/psy_bl_romance_guide.md",
+            "description": "BL 및 로맨스 장르 분석 및 캐릭터 유형 완벽 가이드"
+        },
+        {
+            "name": "model_profiles",
+            "path": "LIBRARY/guides/model_profiles.md",
+            "description": "언어 모델 프로필(SC25, PC25 등) 및 프롬프트 최적화 규칙 레퍼런스"
+        }
+    ]
+}

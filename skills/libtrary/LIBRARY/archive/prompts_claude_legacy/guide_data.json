@@ -1,0 +1,53 @@
+{
+  "title": "Antigravity Pipeline v5 — 3폴더 구조",
+  "version": "5.0.0",
+  "description": "3단계 분리 파이프라인. 01_creation(1,2) → 02_production(3,5~9) → 03_condenser(4,10)",
+  "model_target_default": "SC25_PC25",
+  "folders": [
+    {
+      "folder": "01_creation",
+      "phases": [1, 2],
+      "max_tokens": 8000,
+      "agents": ["world_builder", "personality_designer"],
+      "outputs": ["1_full_prompt.md", "2_personality_prompt.md"]
+    },
+    {
+      "folder": "02_production",
+      "phases": [3, 5, 6, 7, 8, 9],
+      "max_tokens": 6000,
+      "agents": ["visual_designer", "keyword_creator", "scenario_writer", "example_dialogue", "play_guide", "quality_reviewer"],
+      "outputs": ["3_visual_prompts.md", "5_keyword_books.md", "6_opening_scenario.md", "7_example_dialogue.md", "8_play_guide.md", "9_review.md"]
+    },
+    {
+      "folder": "03_condenser",
+      "phases": [4, 10],
+      "max_tokens": 6000,
+      "agents": ["prompt_condenser", "condenser_reviewer"],
+      "outputs": ["4_condensed_prompt.md", "10_condenser_review.md"]
+    }
+  ],
+  "char_limits": {
+    "prompt_condenser": 4800,
+    "keyword_creator": 400,
+    "scenario_writer": 900,
+    "example_dialogue": 500,
+    "play_guide": 400,
+    "title_candidate": 30
+  },
+  "quality_threshold": 80,
+  "max_retries": 3,
+  "shared": {
+    "model_profiles": "shared/model_profiles.md",
+    "safety_rules": "shared/safety_rules.md"
+  },
+  "layer_system": {
+    "layer1": {
+      "file": "01_creation/resources/romance_guide.md",
+      "role": "기법 32개 정의 사전 (읽기전용, 수정 금지)"
+    },
+    "layer2": {
+      "file": "01_creation/resources/world_builder.md",
+      "role": "기법을 [코드]로만 호출, 재정의 금지"
+    }
+  }
+}

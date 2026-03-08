@@ -1,0 +1,44 @@
+{
+    "skill_name": "production_phase2",
+    "version": "1.0.0",
+    "author": "Antigravity",
+    "description": "크랙 프롬프트 파이프라인 Phase 2 — 부속품 생성. 외형, 키워드, 시나리오, 예시대화, 플레이가이드, 품질심사 순차 실행.",
+    "tags": [
+        "production",
+        "phase3",
+        "phase5",
+        "phase6",
+        "phase7",
+        "phase8",
+        "phase9",
+        "image"
+    ],
+    "entry_instruction": "run_production_phase2",
+    "guides": [
+        "romance_guide",
+        "typology_reference",
+        "REFERENCE-prompt-and-frame-guide",
+        "char_prompt_styles_guide",
+        "mv_char_psychology_ref",
+        "psy_limerence",
+        "psy_nonviolent_communication",
+        "psy_love_and_jealousy",
+        "psy_transactional_analysis",
+        "psy_bl_romance_guide",
+        "model_profiles"
+    ],
+    "instructions": [
+        "run_production_phase2",
+        "production_visual_designer",
+        "production_keyword_creator",
+        "production_scenario_writer",
+        "production_example_dialogue",
+        "production_play_guide",
+        "production_quality_reviewer"
+    ],
+    "tools": [
+        "python_exec",
+        "file_read",
+        "file_write"
+    ]
+}

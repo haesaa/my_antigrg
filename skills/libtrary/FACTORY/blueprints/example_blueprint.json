@@ -1,0 +1,19 @@
+{
+    "skill_name": "kpi_manager",
+    "entry_instruction": "calculate_kpi",
+    "instructions": [
+        "calculate_kpi",
+        "aggregate_metrics",
+        "generate_report"
+    ],
+    "guides": [
+        "sales_guide",
+        "metrics_definition",
+        "reporting_format"
+    ],
+    "tools": [
+        "python_exec",
+        "file_read",
+        "file_write"
+    ]
+}

@@ -1,0 +1,237 @@
+{
+    "$schema": "mcp-fallback v1.0",
+    "_description": "MCP 폴백 체인 정의. 기능별 우선순위 + 타임아웃 + 재시도 설정.",
+    "global_settings": {
+        "timeout_ms": 60000,
+        "max_retries_per_mcp": 2,
+        "backoff_strategy": "exponential",
+        "backoff_base_ms": 5000,
+        "backoff_multiplier": 3
+    },
+    "fallback_chains": {
+        "image_generation": {
+            "description": "이미지 생성 (txt2img / img2img)",
+            "chain": [
+                {
+                    "name": "Pixelle",
+                    "type": "ComfyUI→MCP",
+                    "features": [
+                        "txt2img",
+                        "img2img",
+                        "ControlNet",
+                        "IP-Adapter"
+                    ],
+                    "priority": 1
+                },
+                {
+                    "name": "comfy-pilot",
+                    "type": "ComfyUI direct",
+                    "features": [
+                        "워크플로우 편집/실행",
+                        "세밀한 노드 제어"
+                    ],
+                    "priority": 2
+                },
+                {
+                    "name": "Fal",
+                    "type": "Cloud API",
+                    "features": [
+                        "FLUX",
+                        "Stable Diffusion",
+                        "IP-Adapter"
+                    ],
+                    "priority": 3
+                },
+                {
+                    "name": "Replicate",
+                    "type": "Cloud API",
+                    "features": [
+                        "FLUX",
+                        "SDXL"
+                    ],
+                    "priority": 4
+                }
+            ]
+        },
+        "video_generation": {
+            "description": "영상 생성 (img2vid / txt2vid)",
+            "chain": [
+                {
+                    "name": "agent-media",
+                    "type": "Multi-model hub",
+                    "features": [
+                        "Kling",
+                        "Veo",
+                        "Sora",
+                        "Seedance"
+                    ],
+                    "priority": 1
+                },
+                {
+                    "name": "PiAPI",
+                    "type": "Cloud API",
+                    "features": [
+                        "Kling",
+                        "Hunyuan"
+                    ],
+                    "priority": 2
+                },
+                {
+                    "name": "WaveSpeed",
+                    "type": "Cloud API",
+                    "features": [
+                        "이미지+비디오 생성 통합"
+                    ],
+                    "priority": 3
+                },
+                {
+                    "name": "Fal",
+                    "type": "Cloud API",
+                    "features": [
+                        "Kling",
+                        "Runway"
+                    ],
+                    "priority": 4
+                },
+                {
+                    "name": "Pixelle",
+                    "type": "ComfyUI",
+                    "features": [
+                        "AnimateDiff",
+                        "SVD"
+                    ],
+                    "priority": 5
+                }
+            ]
+        },
+        "audio_bgm": {
+            "description": "BGM/음악 생성",
+            "chain": [
+                {
+                    "name": "Mureka",
+                    "type": "Music AI",
+                    "features": [
+                        "가사/노래/배경음악 생성"
+                    ],
+                    "priority": 1
+                },
+                {
+                    "name": "Fal (MusicGen)",
+                    "type": "Cloud API",
+                    "features": [
+                        "AI 음악 생성"
+                    ],
+                    "priority": 2
+                },
+                {
+                    "name": "Suno (vap-showcase)",
+                    "type": "Cloud API",
+                    "features": [
+                        "Flux+Veo+Suno 통합"
+                    ],
+                    "priority": 3
+                }
+            ]
+        },
+        "audio_tts": {
+            "description": "내레이션/TTS",
+            "chain": [
+                {
+                    "name": "ElevenLabs",
+                    "type": "TTS API",
+                    "features": [
+                        "TTS",
+                        "음성 복제"
+                    ],
+                    "priority": 1
+                },
+                {
+                    "name": "Fish Audio",
+                    "type": "TTS API",
+                    "features": [
+                        "다중 음성 TTS",
+                        "스트리밍"
+                    ],
+                    "priority": 2
+                },
+                {
+                    "name": "AllVoiceLab",
+                    "type": "TTS API",
+                    "features": [
+                        "TTS",
+                        "음성 복제",
+                        "비디오 번역"
+                    ],
+                    "priority": 3
+                }
+            ]
+        },
+        "video_editing": {
+            "description": "영상 편집/합성",
+            "chain": [
+                {
+                    "name": "atsurae",
+                    "type": "AI 영상 편집",
+                    "features": [
+                        "타임라인 편집",
+                        "5레이어 합성",
+                        "FFmpeg 렌더링"
+                    ],
+                    "priority": 1
+                },
+                {
+                    "name": "ffmpeg-mcp",
+                    "type": "로컬 편집",
+                    "features": [
+                        "FFmpeg CLI",
+                        "concat",
+                        "xfade",
+                        "오디오 믹스"
+                    ],
+                    "priority": 2
+                },
+                {
+                    "name": "video-edit-mcp",
+                    "type": "편집 API",
+                    "features": [
+                        "트리밍",
+                        "병합",
+                        "이펙트",
+                        "오버레이"
+                    ],
+                    "priority": 3
+                }
+            ]
+        },
+        "media_analysis": {
+            "description": "미디어 분석/검증",
+            "chain": [
+                {
+                    "name": "Probe.dev",
+                    "type": "미디어 분석",
+                    "features": [
+                        "FFprobe",
+                        "MediaInfo"
+                    ],
+                    "priority": 1
+                },
+                {
+                    "name": "ffprobe (local)",
+                    "type": "로컬 도구",
+                    "features": [
+                        "미디어 메타 분석"
+                    ],
+                    "priority": 2
+                },
+                {
+                    "name": "VisionAgent",
+                    "type": "AI 분석",
+                    "features": [
+                        "이미지/비디오 추론 분석"
+                    ],
+                    "priority": 3
+                }
+            ]
+        }
+    }
+}

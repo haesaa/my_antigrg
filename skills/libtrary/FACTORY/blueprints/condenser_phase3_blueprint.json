@@ -1,0 +1,28 @@
+{
+    "skill_name": "condenser_phase3",
+    "version": "1.0.0",
+    "author": "Antigravity",
+    "description": "크랙 프롬프트 파이프라인 Phase 3 — 프롬프트 압축 + 축약 품질심사. 1·2단계 프롬프트 원본을 4800자 이내로 압축하고, 손실 기준에 대한 리뷰어 심사 과정을 통합 실행합니다.",
+    "tags": [
+        "condenser",
+        "phase4",
+        "phase10",
+        "compression",
+        "qa"
+    ],
+    "entry_instruction": "run_condenser_phase3",
+    "guides": [
+        "mv_gate_criteria",
+        "model_profiles"
+    ],
+    "instructions": [
+        "run_condenser_phase3",
+        "condenser_prompt_condenser",
+        "condenser_reviewer"
+    ],
+    "tools": [
+        "python_exec",
+        "file_read",
+        "file_write"
+    ]
+}

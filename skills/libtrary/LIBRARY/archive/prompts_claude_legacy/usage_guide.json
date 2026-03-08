@@ -1,0 +1,386 @@
+{
+    "메타": {
+        "제목": "Antigravity Pipeline v5 — 사용 가이드",
+        "버전": "5.0.0",
+        "최종수정": "2026-02",
+        "설명": "crack.wrtn.ai 프롬프트 생성 파이프라인의 3가지 사용 패턴 가이드. 한 번에 전체 실행 / 분기별 선택 실행 / 수동 단계 제어 방법을 설명합니다."
+    },
+    "파이프라인_구조": {
+        "실행_순서": "01_creation → 03_condenser[4단계] → 02_production → 03_condenser[10단계]",
+        "폴더별_단계": {
+            "01_creation": {
+                "단계": [
+                    1,
+                    2
+                ],
+                "설명": "세계관·캐릭터 생성",
+                "max_tokens": 8000
+            },
+            "02_production": {
+                "단계": [
+                    3,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9
+                ],
+                "설명": "부속품 생성",
+                "max_tokens": 6000
+            },
+            "03_condenser": {
+                "단계": [
+                    4,
+                    10
+                ],
+                "설명": "축약 + 품질심사",
+                "max_tokens": 6000
+            }
+        },
+        "최종_산출물": {
+            "4_condensed_prompt.md": "크랙 붙여넣기용 ≤4800자 축약 프롬프트 ★ 핵심",
+            "1_full_prompt.md": "세계관·캐릭터 전체 프롬프트",
+            "2_personality_prompt.md": "성격유형 통합 프롬프트",
+            "3_visual_prompts.md": "외형+이미지 프롬프트(미드저니·NovelAI·Flux)",
+            "5_keyword_books.md": "키워드북 12개",
+            "6_opening_scenario.md": "시나리오 3개+추천 답변",
+            "7_example_dialogue.md": "예시대화 3칸",
+            "8_play_guide.md": "플레이가이드+태그+제목",
+            "9_review.md": "전체 품질 평가서",
+            "10_condenser_review.md": "축약 품질 검증서"
+        }
+    },
+    "패턴1_한번에_전체실행": {
+        "설명": "처음부터 끝까지 모든 10단계를 순서대로 한 번에 실행하는 가장 기본적인 패턴입니다.",
+        "사용_상황": [
+            "새 캐릭터·세계관을 처음 만들 때",
+            "컨셉 파일을 새로 작성했을 때",
+            "전체를 처음부터 다시 만들고 싶을 때"
+        ],
+        "사전_준비": {
+            "1": "inputs/ 폴더에 컨셉 파일 작성 (concept.md, user_setting.md)",
+            "2": ".env 파일의 MODEL_TARGET 확인 (기본값: SC25_PC25)"
+        },
+        "실행_명령어": [
+            {
+                "순서": 1,
+                "설명": "Phase 1: 세계관·캐릭터 생성",
+                "명령어": "python skills/01_creation/scripts/config.py --phases 1,2",
+                "산출물": [
+                    "outputs/1_full_prompt.md",
+                    "outputs/2_personality_prompt.md"
+                ],
+                "소요_예상": "5~10분"
+            },
+            {
+                "순서": 2,
+                "설명": "Phase 3 (4단계): 프롬프트 축약 — 부속품 생성 전에 먼저 실행",
+                "명령어": "python skills/03_condenser/scripts/config.py --phases 4",
+                "산출물": [
+                    "outputs/4_condensed_prompt.md"
+                ],
+                "소요_예상": "3~5분",
+                "주의": "5~9단계가 4_condensed_prompt.md를 입력으로 사용하므로 반드시 먼저 실행"
+            },
+            {
+                "순서": 3,
+                "설명": "Phase 2: 부속품 전체 생성",
+                "명령어": "python skills/02_production/scripts/config.py --phases 3,5,6,7,8,9",
+                "산출물": [
+                    "outputs/3_visual_prompts.md",
+                    "outputs/5_keyword_books.md",
+                    "outputs/6_opening_scenario.md",
+                    "outputs/7_example_dialogue.md",
+                    "outputs/8_play_guide.md",
+                    "outputs/9_review.md"
+                ],
+                "소요_예상": "15~25분",
+                "자동처리": "9단계 품질 80점 미만 시 최대 3회 자동 재시도"
+            },
+            {
+                "순서": 4,
+                "설명": "Phase 3 (10단계): 축약 품질 최종 검증",
+                "명령어": "python skills/03_condenser/scripts/config.py --phases 10",
+                "산출물": [
+                    "outputs/10_condenser_review.md"
+                ],
+                "소요_예상": "2~3분"
+            }
+        ],
+        "완료_후": "outputs/9_review.md 확인 → 80점 이상이면 4_condensed_prompt.md를 크랙에 업로드"
+    },
+    "패턴2_분기별_선택실행": {
+        "설명": "필요한 단계만 선택해서 실행하는 패턴입니다. 이미 일부 산출물이 있거나 특정 부분만 재생성할 때 사용합니다.",
+        "사용_상황": [
+            "1·2단계는 완료됐고 나머지만 만들 때",
+            "시나리오만 다시 생성하고 싶을 때",
+            "축약 프롬프트만 재압축할 때",
+            "이미지 프롬프트만 원할 때"
+        ],
+        "분기_예시": {
+            "축약만_재실행": {
+                "설명": "세계관·캐릭터(1·2단계)는 이미 있고, 축약 프롬프트만 새로 만들고 싶을 때",
+                "조건": "outputs/1_full_prompt.md, outputs/2_personality_prompt.md 존재",
+                "명령어": [
+                    "python skills/03_condenser/scripts/config.py --phases 4",
+                    "python skills/03_condenser/scripts/config.py --phases 10"
+                ]
+            },
+            "시나리오만_재생성": {
+                "설명": "시나리오(6단계)만 다시 만들고 싶을 때",
+                "조건": "outputs/1_full_prompt.md, outputs/4_condensed_prompt.md 존재",
+                "명령어": "python skills/02_production/scripts/config.py --phases 6"
+            },
+            "키워드+시나리오+대화": {
+                "설명": "크랙 등록에 필요한 텍스트 요소만 만들 때",
+                "조건": "outputs/1_full_prompt.md, outputs/4_condensed_prompt.md 존재",
+                "명령어": "python skills/02_production/scripts/config.py --phases 5,6,7,8"
+            },
+            "품질검사만": {
+                "설명": "이미 완성된 결과물의 품질을 다시 검토할 때",
+                "조건": "outputs/ 전체 산출물 존재",
+                "명령어": "python skills/02_production/scripts/config.py --phases 9"
+            },
+            "이미지_프롬프트만": {
+                "설명": "외형·이미지 프롬프트(Midjourney·NovelAI·Flux)만 필요할 때",
+                "조건": "outputs/1_full_prompt.md, outputs/2_personality_prompt.md 존재",
+                "명령어": "python skills/02_production/scripts/config.py --phases 3"
+            },
+            "부속품_제외_핵심만": {
+                "설명": "크랙 업로드 최소 필수 파일만 생성 (축약 프롬프트+시나리오+예시대화)",
+                "조건": "outputs/1_full_prompt.md, outputs/2_personality_prompt.md 존재",
+                "명령어": [
+                    "python skills/03_condenser/scripts/config.py --phases 4",
+                    "python skills/02_production/scripts/config.py --phases 6,7,8",
+                    "python skills/03_condenser/scripts/config.py --phases 10"
+                ]
+            }
+        },
+        "단계_의존성_테이블": {
+            "설명": "실행 전 존재해야 하는 파일 목록",
+            "의존성": [
+                {
+                    "실행단계": 1,
+                    "필요파일": [
+                        "inputs/concept.md"
+                    ]
+                },
+                {
+                    "실행단계": 2,
+                    "필요파일": [
+                        "outputs/1_full_prompt.md"
+                    ]
+                },
+                {
+                    "실행단계": 3,
+                    "필요파일": [
+                        "outputs/1_full_prompt.md",
+                        "outputs/2_personality_prompt.md"
+                    ]
+                },
+                {
+                    "실행단계": 4,
+                    "필요파일": [
+                        "outputs/1_full_prompt.md",
+                        "outputs/2_personality_prompt.md"
+                    ]
+                },
+                {
+                    "실행단계": 5,
+                    "필요파일": [
+                        "outputs/1_full_prompt.md"
+                    ]
+                },
+                {
+                    "실행단계": 6,
+                    "필요파일": [
+                        "outputs/1_full_prompt.md",
+                        "outputs/4_condensed_prompt.md"
+                    ]
+                },
+                {
+                    "실행단계": 7,
+                    "필요파일": [
+                        "outputs/1_full_prompt.md",
+                        "outputs/4_condensed_prompt.md"
+                    ]
+                },
+                {
+                    "실행단계": 8,
+                    "필요파일": [
+                        "outputs/1_full_prompt.md",
+                        "outputs/6_opening_scenario.md"
+                    ]
+                },
+                {
+                    "실행단계": 9,
+                    "필요파일": [
+                        "outputs/ 1~8단계 전체"
+                    ]
+                },
+                {
+                    "실행단계": 10,
+                    "필요파일": [
+                        "outputs/4_condensed_prompt.md",
+                        "outputs/1_full_prompt.md",
+                        "outputs/2_personality_prompt.md"
+                    ]
+                }
+            ]
+        }
+    },
+    "패턴3_수동변경": {
+        "설명": "특정 설정을 직접 바꿔서 실행하거나, 산출물을 직접 편집하는 패턴입니다.",
+        "사용_상황": [
+            "다른 크랙 모델용으로 최적화된 프롬프트를 만들 때",
+            "AI 출력물을 직접 편집 후 다음 단계로 넘길 때",
+            "품질 점수가 낮아 수동으로 특정 단계만 수정할 때",
+            "4_condensed_prompt.md를 직접 편집한 후 10단계로 검증할 때"
+        ],
+        "수동변경_케이스": [
+            {
+                "케이스": "모델 타겟 변경",
+                "설명": "특정 크랙 모델에 최적화된 프롬프트 생성",
+                "방법": "환경변수로 MODEL_TARGET 설정 후 실행",
+                "예시_명령어": {
+                    "하이퍼챗_전용": "MODEL_TARGET=HC_ONLY python skills/03_condenser/scripts/config.py --phases 4,10",
+                    "슈퍼챗1.5_전용": "MODEL_TARGET=SC15 python skills/03_condenser/scripts/config.py --phases 4",
+                    "프로챗1.0_전용": "MODEL_TARGET=PC10 python skills/01_creation/scripts/config.py --phases 1,2",
+                    "전모델_호환": "MODEL_TARGET=ALL python skills/03_condenser/scripts/config.py --phases 4"
+                },
+                "모델_코드표": {
+                    "HC": {
+                        "모델명": "하이퍼챗",
+                        "엔진": "Opus 4.6",
+                        "특성": "감정·뉘앙스 최강, 출력량↓"
+                    },
+                    "SC25": {
+                        "모델명": "슈퍼챗 2.5",
+                        "엔진": "Sonnet 4.6",
+                        "특성": "인물묘사↑ 풍부↑"
+                    },
+                    "SC20": {
+                        "모델명": "슈퍼챗 2.0",
+                        "엔진": "Sonnet 4.5",
+                        "특성": "생동감↑ 재미↑"
+                    },
+                    "SC15": {
+                        "모델명": "슈퍼챗 1.5",
+                        "엔진": "Sonnet 4.0",
+                        "특성": "긍정편향↑↑ — 방지 강화 필요"
+                    },
+                    "PC25": {
+                        "모델명": "프로챗 2.5",
+                        "엔진": "Gemini 3.1 Pro",
+                        "특성": "몰입↑ 깊이↑"
+                    },
+                    "PC20": {
+                        "모델명": "프로챗 2.0",
+                        "엔진": "Gemini 3.0 Pro",
+                        "특성": "서사↑ 다채로움↑"
+                    },
+                    "PC10": {
+                        "모델명": "프로챗 1.0",
+                        "엔진": "Gemini 2.5 Pro",
+                        "특성": "묘사/문체 우수 (레거시 주력)"
+                    }
+                }
+            },
+            {
+                "케이스": "산출물 직접 편집 후 재검증",
+                "설명": "AI가 생성한 4_condensed_prompt.md를 직접 편집한 뒤 10단계로 품질 검증",
+                "단계": [
+                    "1. outputs/4_condensed_prompt.md 를 텍스트 에디터로 직접 편집",
+                    "2. 편집 완료 후 글자 수 확인 (4800자 이내인지)",
+                    "3. python skills/03_condenser/scripts/config.py --phases 10 실행",
+                    "4. outputs/10_condenser_review.md 에서 채점표 확인"
+                ],
+                "주의": "한국어 유지 대상(고유명사·상태창·info 항목)을 영문화하지 않도록 주의"
+            },
+            {
+                "케이스": "특정 단계만 수동 재실행",
+                "설명": "9단계 품질 심사에서 'WARNING' 또는 'FAIL' 단계를 개별 재실행",
+                "방법": "9_review.md의 '재실행 필요 단계' 항목을 확인 후 해당 단계만 재실행",
+                "예시": {
+                    "시나리오_재생성": "python skills/02_production/scripts/config.py --phases 6",
+                    "예시대화_재생성": "python skills/02_production/scripts/config.py --phases 7",
+                    "키워드_재생성": "python skills/02_production/scripts/config.py --phases 5",
+                    "축약_재압축": "python skills/03_condenser/scripts/config.py --phases 4"
+                }
+            },
+            {
+                "케이스": "UNSAFE 블록 수동 제거",
+                "설명": "세이프 작품용으로 성인 콘텐츠 관련 성격유형 블록 제거",
+                "방법": "outputs/2_personality_prompt.md 에서 [UNSAFE] 태그로 묶인 블록 전체 삭제",
+                "안전성": "독립 구조라 제거해도 나머지 콘텐츠에 영향 없음",
+                "제거_대상": [
+                    "BDSM 역할 스펙트럼",
+                    "에로틱 블루프린트",
+                    "친밀 애착 스타일"
+                ]
+            },
+            {
+                "케이스": "config.py 파라미터 수동 조정",
+                "설명": "scripts/config.py의 핵심 파라미터를 직접 수정하는 경우",
+                "수정_가능_항목": {
+                    "MAX_TOKENS": "최대 토큰 수 (기본: 6000 / prompt_condenser는 8000)",
+                    "TEMPERATURE": "창의성 수준 (기본: 0.7 / 낮을수록 일관성↑)",
+                    "QUALITY_THRESHOLD": "품질 기준 점수 (기본: 80)",
+                    "MAX_RETRIES": "품질 미달 시 재시도 횟수 (기본: 3)"
+                },
+                "주의": "CHAR_LIMITS(4800자) 수정은 크랙 호환성에 영향. 수정 비권장."
+            }
+        ]
+    },
+    "트러블슈팅": {
+        "자주발생_문제": [
+            {
+                "증상": "4_condensed_prompt.md가 4800자를 초과함",
+                "원인": "입력 프롬프트가 너무 방대하거나 압축 규칙이 충분히 적용되지 않음",
+                "해결": [
+                    "1. 3단계 재실행 (자동 재압축 최대 3회)",
+                    "2. 반복 실패 시 inputs/concept.md 내용 간소화 후 1·2단계부터 재실행"
+                ]
+            },
+            {
+                "증상": "9단계 품질 점수가 계속 80점 미만",
+                "원인": "inputs/ 컨셉 파일 내용 부실, 또는 특정 필수 요소 누락",
+                "해결": [
+                    "1. 9_review.md의 '재실행 필요 단계' 확인",
+                    "2. 해당 단계만 개별 재실행",
+                    "3. inputs/concept.md를 더 구체적으로 작성 (캐릭터 성격, 갈등, 세계관 디테일)"
+                ]
+            },
+            {
+                "증상": "10단계에서 모델 방어구문 항목 0점",
+                "원인": "MODEL_TARGET에 맞는 방어구문이 4단계 출력에 포함되지 않음",
+                "해결": "MODEL_TARGET 환경변수 확인 후 4→10단계 재실행"
+            },
+            {
+                "증상": "고유명사가 영문으로 바뀌어 있음",
+                "원인": "압축 과정에서 금지 규칙 위반",
+                "해결": "outputs/4_condensed_prompt.md 직접 편집으로 한국어 복원 후 10단계 재검증"
+            }
+        ]
+    },
+    "빠른_참조": {
+        "핵심_명령어_4개": [
+            "python skills/01_creation/scripts/config.py --phases 1,2",
+            "python skills/03_condenser/scripts/config.py --phases 4",
+            "python skills/02_production/scripts/config.py --phases 3,5,6,7,8,9",
+            "python skills/03_condenser/scripts/config.py --phases 10"
+        ],
+        "글자수_제한_요약": {
+            "4_condensed_prompt": "≤4800자 (공백 포함)",
+            "키워드북_각각": "≤400자",
+            "시나리오_각각": "≤900자",
+            "예시대화_각칸": "≤500자",
+            "플레이가이드": "≤400자",
+            "제목_후보": "≤30자"
+        },
+        "수정_금지_파일": [
+            "01_creation/resources/romance_guide.md (Layer 1 기법 사전 — 읽기전용)",
+            "skills/pipeline_schema.json (레거시 스키마 — 읽기전용)"
+        ]
+    }
+}

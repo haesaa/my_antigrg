@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Music Analyzer - 브라우저에서 BPM, Key, Camelot, Beat를 분석하는 로컬 도구. 서버 없음, 인터넷 불필요.">
+    <title>🎵 Music Analyzer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #080810;
+            --card: rgba(255, 255, 255, 0.035);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-h: rgba(255, 255, 255, 0.16);
+            --t1: #f0f0f8;
+            --t2: #8080a0;
+            --t3: #444460;
+            --p: #7c5cff;
+            --c2: #5ce0d8;
+            --c3: #ff6b8a;
+            --c4: #ffd66b;
+            --grad: linear-gradient(135deg, #7c5cff, #5ce0d8, #ff6b8a);
+            --r1: 20px;
+            --r2: 14px;
+            --r3: 8px;
+            --ease: all 0.28s cubic-bezier(.4, 0, .2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--t1);
+            min-height: 100vh;
+            overflow-x: hidden
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 20%, rgba(124, 92, 255, .07) 0, transparent 50%),
+                radial-gradient(circle at 70% 80%, rgba(92, 224, 216, .05) 0, transparent 50%);
+            animation: bgS 25s ease-in-out infinite;
+            z-index: 0
+        }
+
+        @keyframes bgS {
+
+            0%,
+            100% {
+                transform: translate(0, 0)
+            }
+
+            50% {
+                transform: translate(-1%, 1%)
+            }
+        }
+
+        .wrap {
+            position: relative;
+            z-index: 1;
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 48px 24px 80px
+        }
+
+        /* Header */
+        .hdr {
+            text-align: center;
+            margin-bottom: 44px
+        }
+
+        .hdr h1 {
+            font-size: 2.7rem;
+            font-weight: 900;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -.03em;
+            margin-bottom: 10px
+        }
+
+        .hdr p {
+            color: var(--t2);
+            font-size: 1rem
+        }
+
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+            margin-top: 14px
+        }
+
+        .badge {
+            font-size: .68rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: rgba(124, 92, 255, .12);
+            color: var(--p);
+            border: 1px solid rgba(124, 92, 255, .22);
+            text-transform: uppercase;
+            letter-spacing: .06em
+        }
+
+        /* Card */
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--r1);
+            backdrop-filter: blur(24px);
+            padding: 32px;
+            transition: var(--ease)
+        }
+
+        .card:hover {
+            border-color: var(--border-h)
+        }
+
+        /* Drop Zone */
+        .drop {
+            display: block;
+            text-align: center;
+            padding: 56px 32px;
+            border: 2px dashed rgba(124, 92, 255, .22);
+            border-radius: var(--r1);
+            background: linear-gradient(135deg, rgba(124, 92, 255, .07), rgba(92, 224, 216, .04));
+            cursor: pointer;
+            transition: var(--ease);
+            position: relative;
+        }
+
+        .drop:hover,
+        .drop.over {
+            border-color: var(--p);
+            background: rgba(124, 92, 255, .09);
+            box-shadow: 0 0 40px rgba(124, 92, 255, .14);
+            transform: translateY(-2px)
+        }
+
+        .drop-ico {
+            font-size: 3.4rem;
+            display: block;
+            margin-bottom: 14px;
+            filter: drop-shadow(0 0 18px rgba(124, 92, 255, .3))
+        }
+
+        .drop-txt {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 6px
+        }
+
+        .drop-sub {
+            font-size: .82rem;
+            color: var(--t3)
+        }
+
+        #fi {
+            display: none
+        }
+
+        /* Notice (info banner) */
+        .notice {
+            margin-top: 18px;
+            padding: 12px 16px;
+            background: rgba(92, 224, 216, .06);
+            border: 1px solid rgba(92, 224, 216, .15);
+            border-radius: var(--r2);
+            color: var(--c2);
+            font-size: .82rem;
+            display: flex;
+            gap: 8px;
+            align-items: flex-start
+        }
+
+        /* Progress */
+        .prog {
+            display: none;
+            margin-top: 28px
+        }
+
+        .prog.on {
+            display: block;
+            animation: fi .3s ease
+        }
+
+        .prog-lbl {
+            font-size: .82rem;
+            color: var(--t2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px
+        }
+
+        .prog-track {
+            height: 5px;
+            background: rgba(255, 255, 255, .06);
+            border-radius: 3px;
+            overflow: hidden
+        }
+
+        .prog-fill {
+            height: 100%;
+            background: var(--grad);
+            border-radius: 3px;
+            width: 0%;
+            transition: width .25s ease
+        }
+
+        .spin {
+            display: inline-block;
+            width: 13px;
+            height: 13px;
+            border: 2px solid rgba(124, 92, 255, .2);
+            border-top-color: var(--p);
+            border-radius: 50%;
+            animation: spin .75s linear infinite
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        /* Error */
+        .err {
+            display: none;
+            margin-top: 16px;
+            padding: 14px 18px;
+            background: rgba(255, 107, 138, .08);
+            border: 1px solid rgba(255, 107, 138, .22);
+            border-radius: var(--r2);
+            color: var(--c3);
+            font-size: .88rem;
+            gap: 8px;
+            align-items: center
+        }
+
+        .err.on {
+            display: flex;
+            animation: fi .3s ease
+        }
+
+        /* Results */
+        .res {
+            display: none;
+            margin-top: 28px
+        }
+
+        .res.on {
+            display: block;
+            animation: fi .45s ease
+        }
+
+        @keyframes fi {
+            from {
+                opacity: 0;
+                transform: translateY(10px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        .finfo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid var(--border);
+            border-radius: var(--r2);
+            margin-bottom: 22px
+        }
+
+        .finfo-ico {
+            font-size: 1.9rem
+        }
+
+        .finfo-name {
+            font-weight: 600;
+            font-size: .95rem
+        }
+
+        .finfo-meta {
+            font-size: .75rem;
+            color: var(--t3);
+            margin-top: 2px
+        }
+
+        /* Metrics Grid */
+        .mgrid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-bottom: 22px
+        }
+
+        .mc {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--r2);
+            padding: 22px;
+            text-align: center;
+            transition: var(--ease);
+            position: relative;
+            overflow: hidden
+        }
+
+        .mc::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            border-radius: 3px 3px 0 0
+        }
+
+        .mc:nth-child(1)::before {
+            background: var(--p)
+        }
+
+        .mc:nth-child(2)::before {
+            background: var(--c2)
+        }
+
+        .mc:nth-child(3)::before {
+            background: var(--c3)
+        }
+
+        .mc:nth-child(4)::before {
+            background: var(--c4)
+        }
+
+        .mc:hover {
+            border-color: var(--border-h);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(0, 0, 0, .3)
+        }
+
+        .ml {
+            font-size: .7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            color: var(--t3);
+            margin-bottom: 7px
+        }
+
+        .mv {
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: -.03em;
+            line-height: 1
+        }
+
+        .mc:nth-child(1) .mv {
+            color: var(--p)
+        }
+
+        .mc:nth-child(2) .mv {
+            color: var(--c2)
+        }
+
+        .mc:nth-child(3) .mv {
+            color: var(--c3)
+        }
+
+        .mc:nth-child(4) .mv {
+            color: var(--c4)
+        }
+
+        .ms {
+            font-size: .75rem;
+            color: var(--t2);
+            margin-top: 5px
+        }
+
+        /* Waveform */
+        .stitle {
+            font-size: .72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: var(--t3);
+            margin-bottom: 10px
+        }
+
+        .ww {
+            background: rgba(0, 0, 0, .28);
+            border: 1px solid var(--border);
+            border-radius: var(--r2);
+            padding: 14px;
+            margin-bottom: 20px
+        }
+
+        #wc {
+            width: 100%;
+            height: 90px;
+            display: block;
+            border-radius: var(--r3)
+        }
+
+        /* Beat table */
+        .tw {
+            max-height: 180px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            border-radius: var(--r2);
+            margin-bottom: 20px
+        }
+
+        .tw::-webkit-scrollbar {
+            width: 5px
+        }
+
+        .tw::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, .1);
+            border-radius: 3px
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .82rem
+        }
+
+        thead {
+            position: sticky;
+            top: 0;
+            z-index: 1
+        }
+
+        th {
+            background: rgba(124, 92, 255, .1);
+            color: var(--p);
+            font-weight: 700;
+            font-size: .7rem;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            padding: 9px 14px;
+            text-align: left
+        }
+
+        td {
+            padding: 7px 14px;
+            border-top: 1px solid rgba(255, 255, 255, .03);
+            color: var(--t2);
+            font-variant-numeric: tabular-nums
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, .02)
+        }
+
+        /* Buttons */
+        .btns {
+            display: flex;
+            gap: 10px
+        }
+
+        .btn {
+            flex: 1;
+            padding: 13px 18px;
+            border: none;
+            border-radius: var(--r2);
+            font-family: 'Inter', sans-serif;
+            font-size: .88rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--ease);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px
+        }
+
+        .bp {
+            background: var(--grad);
+            color: #fff
+        }
+
+        .bp:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(124, 92, 255, .3)
+        }
+
+        .bs {
+            background: rgba(255, 255, 255, .06);
+            color: var(--t1);
+            border: 1px solid var(--border)
+        }
+
+        .bs:hover {
+            background: rgba(255, 255, 255, .1);
+            border-color: var(--border-h)
+        }
+
+        .br {
+            margin-top: 14px;
+            width: 100%;
+            background: transparent;
+            color: var(--t3);
+            border: 1px dashed rgba(255, 255, 255, .1)
+        }
+
+        .br:hover {
+            color: var(--t2);
+            border-color: rgba(255, 255, 255, .18)
+        }
+
+        .foot {
+            text-align: center;
+            margin-top: 48px;
+            color: var(--t3);
+            font-size: .72rem
+        }
+
+        @media(max-width:580px) {
+            .hdr h1 {
+                font-size: 2rem
+            }
+
+            .mgrid {
+                grid-template-columns: 1fr
+            }
+
+            .btns {
+                flex-direction: column
+            }
+
+            .wrap {
+                padding: 28px 16px 50px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <header class="hdr">
+            <h1>🎵 Music Analyzer</h1>
+            <p>오디오 파일을 드롭하면 BPM · Key · Camelot · Beat를 즉시 분석합니다</p>
+            <div class="badges">
+                <span class="badge">MP3</span><span class="badge">FLAC</span><span class="badge">WAV</span>
+                <span class="badge">AAC</span><span class="badge">M4A</span><span class="badge">OGG</span>
+                <span class="badge">AIFF</span><span class="badge">WMA</span>
+            </div>
+        </header>
+
+        <div class="card" id="upCard">
+            <label class="drop" id="dz" for="fi">
+                <span class="drop-ico">🎧</span>
+                <div class="drop-txt">오디오 파일을 여기에 드래그하세요</div>
+                <div class="drop-sub">또는 클릭하여 파일 선택</div>
+            </label>
+            <input type="file" id="fi" accept=".mp3,.flac,.wav,.aac,.m4a,.ogg,.aiff,.aif,.wma,audio/*">
+            <div class="notice">
+                ℹ️ 외부 서버 없음 · 파일은 브라우저 내에서만 처리됩니다 · 인터넷 연결 불필요
+            </div>
+            <div class="prog" id="pg">
+                <div class="prog-lbl"><span id="pgtxt">분석 중...</span><span class="spin"></span></div>
+                <div class="prog-track">
+                    <div class="prog-fill" id="pgfill"></div>
+                </div>
+            </div>
+            <div class="err" id="errdiv"><span>⚠️</span><span id="errtxt"></span></div>
+        </div>
+
+        <div class="res" id="res">
+            <div class="finfo">
+                <span class="finfo-ico">🎵</span>
+                <div>
+                    <div class="finfo-name" id="fname"></div>
+                    <div class="finfo-meta" id="fmeta"></div>
+                </div>
+            </div>
+            <div class="mgrid">
+                <div class="mc">
+                    <div class="ml">BPM</div>
+                    <div class="mv" id="vBpm">—</div>
+                    <div class="ms" id="sBpm"></div>
+                </div>
+                <div class="mc">
+                    <div class="ml">Key</div>
+                    <div class="mv" id="vKey">—</div>
+                    <div class="ms" id="sKey"></div>
+                </div>
+                <div class="mc">
+                    <div class="ml">Camelot</div>
+                    <div class="mv" id="vCam">—</div>
+                    <div class="ms" id="sCam"></div>
+                </div>
+                <div class="mc">
+                    <div class="ml">Duration</div>
+                    <div class="mv" id="vDur">—</div>
+                    <div class="ms" id="sDur"></div>
+                </div>
+            </div>
+            <div class="stitle">Waveform + Beat Markers</div>
+            <div class="ww"><canvas id="wc"></canvas></div>
+            <div class="stitle">Beat Positions</div>
+            <div class="tw">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Time</th>
+                            <th>Sec</th>
+                        </tr>
+                    </thead>
+                    <tbody id="btb"></tbody>
+                </table>
+            </div>
+            <div class="btns">
+                <button class="btn bp" id="btnMd">📄 music-meta.md</button>
+                <button class="btn bs" id="btnJs">📋 JSON</button>
+            </div>
+            <button class="btn br" id="btnReset">🔄 다른 파일 분석</button>
+        </div>
+
+        <footer class="foot">Music Analyzer · 순수 Web Audio API · 외부 라이브러리 없음</footer>
+    </div>
+
+    <script>
+        // ================================================================
+        // Camelot Map
+        // ================================================================
+        const CAM = {
+            'C major': '8B', 'A minor': '8A', 'G major': '9B', 'E minor': '9A',
+            'D major': '10B', 'B minor': '10A', 'A major': '11B', 'F# minor': '11A',
+            'E major': '12B', 'C# minor': '12A', 'B major': '1B', 'G# minor': '1A',
+            'F# major': '2B', 'D# minor': '2A', 'Db major': '3B', 'Bb minor': '3A',
+            'Ab major': '4B', 'F minor': '4A', 'Eb major': '5B', 'C minor': '5A',
+            'Bb major': '6B', 'G minor': '6A', 'F major': '7B', 'D minor': '7A',
+            'Gb major': '2B', 'Eb minor': '2A', 'C# major': '3B', 'A# minor': '3A',
+            'G# major': '4B', 'D# major': '5B', 'A# major': '6B',
+            'Cb major': '1B', 'Ab minor': '1A'
+        };
+
+        function camCompat(c) {
+            if (!c || c === '?') return '';
+            const n = parseInt(c), l = c.slice(-1);
+            const prev = ((n - 2 + 12) % 12) + 1, next = (n % 12) + 1;
+            return [n + (l === 'A' ? 'B' : 'A'), prev + l, next + l].join(', ');
+        }
+
+        // ================================================================
+        // BPM Detection — Energy-based autocorrelation
+        // ================================================================
+        function detectBPM(pcm, sr) {
+            // Down-sample to ~11025 Hz for speed
+            const ds = 4;
+            const hop = Math.floor(512 * ds);
+            const win = Math.floor(1024 * ds);
+            const energies = [];
+
+            for (let i = 0; i + win < pcm.length; i += hop) {
+                let e = 0;
+                for (let j = i; j < i + win; j++) e += pcm[j] * pcm[j];
+                energies.push(e / win);
+            }
+
+            // Onset detection: positive diff
+            const onset = energies.map((v, i) => i === 0 ? 0 : Math.max(0, v - energies[i - 1]));
+
+            // Autocorrelation over tempo range 40–220 BPM
+            const hopSec = hop / sr;
+            const minPeriod = Math.floor(60 / 220 / hopSec);
+            const maxPeriod = Math.floor(60 / 40 / hopSec);
+            let bestScore = -1, bestPeriod = 0;
+
+            for (let p = minPeriod; p <= maxPeriod; p++) {
+                let score = 0;
+                for (let i = 0; i + p < onset.length; i++) score += onset[i] * onset[i + p];
+                if (score > bestScore) { bestScore = score; bestPeriod = p; }
+            }
+
+            const bpm = Math.round(60 / (bestPeriod * hopSec));
+
+            // Beat positions
+            const beats = [];
+            const threshold = Math.max(...onset) * 0.3;
+            for (let i = 1; i < onset.length - 1; i++) {
+                if (onset[i] > threshold && onset[i] >= onset[i - 1] && onset[i] >= onset[i + 1]) {
+                    beats.push(i * hopSec);
+                }
+            }
+
+            // Median-filter beat intervals to snap to tempo grid
+            const snapped = snapBeats(beats, bpm);
+            return { bpm, beats: snapped };
+        }
+
+        function snapBeats(beats, bpm) {
+            if (beats.length < 2) return beats;
+            const period = 60 / bpm;
+            const out = [beats[0]];
+            let t = beats[0];
+            const last = beats[beats.length - 1];
+            while (t + period <= last + period * 0.5) {
+                t += period;
+                out.push(parseFloat(t.toFixed(3)));
+            }
+            return out;
+        }
+
+        // ================================================================
+        // Key Detection — Chromagram + Krumhansl-Schmuckler
+        // ================================================================
+        const KS_MAJOR = [6.35, 2.23, 3.48, 2.33, 4.38, 4.09, 2.52, 5.19, 2.39, 3.66, 2.29, 2.88];
+        const KS_MINOR = [6.33, 2.68, 3.52, 5.38, 2.60, 3.53, 2.54, 4.75, 3.98, 2.69, 3.34, 3.17];
+        const NOTE_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+
+        function detectKey(pcm, sr) {
+            // Build chromagram using FFT buckets
+            const fftSize = 8192;
+            // Sample 8 windows evenly across audio
+            const nWindows = 8;
+            const chroma = new Float32Array(12).fill(0);
+            const step = Math.floor((pcm.length - fftSize) / nWindows);
+
+            for (let w = 0; w < nWindows; w++) {
+                const offset = w * step;
+                const frame = pcm.slice(offset, offset + fftSize);
+                // Apply Hann window
+                for (let i = 0; i < fftSize; i++) frame[i] *= 0.5 - 0.5 * Math.cos(2 * Math.PI * i / fftSize);
+                const spectrum = fft(frame);
+                // Map FFT bins to chroma
+                for (let bin = 1; bin < fftSize / 2; bin++) {
+                    const freq = bin * sr / fftSize;
+                    if (freq < 65 || freq > 2100) continue;
+                    const midi = 12 * Math.log2(freq / 440) + 69;
+                    const pc = ((Math.round(midi) % 12) + 12) % 12;
+                    chroma[pc] += spectrum[bin];
+                }
+            }
+
+            // Normalize
+            const cmax = Math.max(...chroma);
+            if (cmax > 0) for (let i = 0; i < 12; i++) chroma[i] /= cmax;
+
+            // Compare with KS profiles for all 12 keys × 2 modes
+            let bestScore = -Infinity, bestKey = 0, bestMode = 'major';
+            for (let root = 0; root < 12; root++) {
+                const maj = ksCorr(chroma, KS_MAJOR, root);
+                const min = ksCorr(chroma, KS_MINOR, root);
+                if (maj > bestScore) { bestScore = maj; bestKey = root; bestMode = 'major'; }
+                if (min > bestScore) { bestScore = min; bestKey = root; bestMode = 'minor'; }
+            }
+
+            return { key: NOTE_NAMES[bestKey], scale: bestMode, strength: bestScore };
+        }
+
+        function ksCorr(chroma, profile, root) {
+            // Pearson correlation between chroma and profile shifted by root
+            const pc = Array.from({ length: 12 }, (_, i) => chroma[(i + root) % 12]);
+            const mc = pc.reduce((a, b) => a + b, 0) / 12;
+            const mp = profile.reduce((a, b) => a + b, 0) / 12;
+            let num = 0, dc = 0, dp = 0;
+            for (let i = 0; i < 12; i++) {
+                const a = pc[i] - mc, b = profile[i] - mp;
+                num += a * b; dc += a * a; dp += b * b;
+            }
+            return dc * dp === 0 ? 0 : num / Math.sqrt(dc * dp);
+        }
+
+        // Minimal DFT (slow but no deps needed, runs only on short frames)
+        function fft(real) {
+            const N = real.length;
+            const mag = new Float32Array(N / 2);
+            for (let k = 0; k < N / 2; k++) {
+                let re = 0, im = 0;
+                for (let n = 0; n < N; n++) {
+                    const angle = -2 * Math.PI * k * n / N;
+                    re += real[n] * Math.cos(angle);
+                    im += real[n] * Math.sin(angle);
+                }
+                mag[k] = Math.sqrt(re * re + im * im);
+            }
+            return mag;
+        }
+
+        // ================================================================
+        // Main handleFile
+        // ================================================================
+        let result = null;
+        const EXTS = ['mp3', 'flac', 'wav', 'aac', 'm4a', 'ogg', 'aiff', 'aif', 'wma'];
+
+        async function handleFile(file) {
+            const ext = file.name.split('.').pop().toLowerCase();
+            if (!EXTS.includes(ext)) { showErr(`지원하지 않는 포맷: .${ext}`); return; }
+
+            hideErr();
+            setProg('파일 읽는 중...', 8);
+
+            try {
+                const buf = await file.arrayBuffer();
+                setProg('오디오 디코딩 중...', 20);
+
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                let ab;
+                try {
+                    ab = await ctx.decodeAudioData(buf);
+                } catch (e) {
+                    showErr(`디코딩 실패: Chrome/Edge를 사용하세요. (${ext} 지원 불가)`); return;
+                }
+
+                const sr = ab.sampleRate;
+                const dur = ab.duration;
+                // Mono mix
+                const ch = ab.numberOfChannels;
+                const len = ab.length;
+                const pcm = new Float32Array(len);
+                for (let c = 0; c < ch; c++) {
+                    const d = ab.getChannelData(c);
+                    for (let i = 0; i < len; i++) pcm[i] += d[i] / ch;
+                }
+                ctx.close();
+
+                setProg('BPM 분석 중... (몇 초 소요)', 40);
+                // Yield to UI
+                await tick();
+                const { bpm, beats } = detectBPM(pcm, sr);
+
+                setProg('키 분석 중...', 72);
+                await tick();
+                const { key, scale, strength } = detectKey(pcm, sr);
+
+                setProg('완료!', 100);
+                await tick(200);
+
+                const fullKey = `${key} ${scale}`;
+                const camelot = CAM[fullKey] || '?';
+                result = { fileName: file.name, fileSize: file.size, ext, dur, sr, bpm, beats, key, scale, fullKey, camelot, strength };
+                render(result);
+
+            } catch (e) {
+                showErr(`오류: ${e.message}`);
+                console.error(e);
+            }
+        }
+
+        function tick(ms = 0) { return new Promise(r => setTimeout(r, ms)); }
+
+        // ================================================================
+        // Render
+        // ================================================================
+        function render(r) {
+            document.getElementById('upCard').style.display = 'none';
+            const resEl = document.getElementById('res');
+            resEl.style.display = 'block';
+            resEl.classList.add('on');
+
+            document.getElementById('fname').textContent = r.fileName;
+            document.getElementById('fmeta').textContent =
+                `${fmtSize(r.fileSize)} · ${r.sr} Hz · ${r.ext.toUpperCase()}`;
+
+            document.getElementById('vBpm').textContent = r.bpm || '?';
+            document.getElementById('sBpm').textContent = `${r.beats.length}비트 감지`;
+            document.getElementById('vKey').textContent = r.key;
+            document.getElementById('sKey').textContent = r.scale;
+            document.getElementById('vCam').textContent = r.camelot;
+            document.getElementById('sCam').textContent = `호환: ${camCompat(r.camelot)}`;
+            document.getElementById('vDur').textContent = fmtTime(r.dur);
+            document.getElementById('sDur').textContent = `${r.dur.toFixed(1)}초`;
+
+            drawWave(r);
+            renderBeats(r.beats);
+        }
+
+        function drawWave(r) {
+            const canvas = document.getElementById('wc');
+            const dpr = window.devicePixelRatio || 1;
+            const w = canvas.parentElement.clientWidth - 28;
+            const h = 90;
+            canvas.width = w * dpr; canvas.height = h * dpr;
+            canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+            const ctx = canvas.getContext('2d');
+            ctx.scale(dpr, dpr);
+
+            // We don't have pcm here — draw beat grid instead
+            ctx.fillStyle = 'rgba(0,0,0,0)';
+            ctx.clearRect(0, 0, w, h);
+
+            // Draw beat markers
+            ctx.strokeStyle = 'rgba(124,92,255,0.4)';
+            ctx.lineWidth = 1;
+            r.beats.forEach(t => {
+                const x = (t / r.dur) * w;
+                ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+            });
+
+            // Decorative gradient bar
+            const grad = ctx.createLinearGradient(0, 0, w, 0);
+            grad.addColorStop(0, 'rgba(124,92,255,0.5)');
+            grad.addColorStop(0.5, 'rgba(92,224,216,0.5)');
+            grad.addColorStop(1, 'rgba(255,107,138,0.5)');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, h / 2 - 1, w, 2);
+        }
+
+        function renderBeats(beats) {
+            const tb = document.getElementById('btb');
+            tb.innerHTML = beats.map((t, i) =>
+                `<tr><td>${i + 1}</td><td>${fmtTime(t)}</td><td>${t.toFixed(3)}</td></tr>`
+            ).join('');
+        }
+
+        // ================================================================
+        // Export
+        // ================================================================
+        document.getElementById('btnMd').addEventListener('click', () => {
+            if (!result) return;
+            const r = result;
+            const sLen = 30;
+            const sections = [];
+            for (let s = 0; s < r.dur; s += sLen) {
+                const e = Math.min(s + sLen, r.dur);
+                const cnt = r.beats.filter(b => b >= s && b < e).length;
+                sections.push(`| Section ${Math.floor(s / sLen) + 1} | ${fmtTime(s)} | ${fmtTime(e)} | ${cnt} |`);
+            }
+            // 전체 비트 — 10개씩 줄바꿈
+            const beatLines = [];
+            for (let i = 0; i < r.beats.length; i += 10) {
+                beatLines.push(r.beats.slice(i, i + 10).map(t => t.toFixed(3)).join(', '));
+            }
+            const md =
+                `# 음원 정보
+
+- 곡명: ${r.fileName}
+- BPM: ${r.bpm}
+- 총 길이: ${fmtTime(r.dur)} (${r.dur.toFixed(1)}초)
+- Key: ${r.fullKey}
+- Camelot: ${r.camelot}
+- 호환 키: ${camCompat(r.camelot)}
+- Sample Rate: ${r.sr} Hz
+
+## 구간 구조 (30초 단위)
+
+| 구간 | 시작 | 끝 | 비트 수 |
+|------|------|-----|---------|
+${sections.join('\n')}
+
+## Beat Positions (전체 ${r.beats.length}개)
+
+${beatLines.join('\n')}
+`;
+            dlFile(md, 'music-meta.md', 'text/markdown');
+        });
+
+        document.getElementById('btnJs').addEventListener('click', () => {
+            if (!result) return;
+            const r = result;
+            dlFile(JSON.stringify({
+                fileName: r.fileName, bpm: r.bpm, key: r.fullKey, camelot: r.camelot,
+                camelotCompatible: camCompat(r.camelot),
+                duration: +r.dur.toFixed(2), sampleRate: r.sr,
+                totalBeats: r.beats.length,
+                beats: r.beats.map(t => +t.toFixed(3))
+            }, null, 2), 'music-meta.json', 'application/json');
+        });
+
+        document.getElementById('btnReset').addEventListener('click', () => {
+            document.getElementById('upCard').style.display = 'block';
+            const res = document.getElementById('res');
+            res.style.display = 'none'; res.classList.remove('on');
+            document.getElementById('pg').classList.remove('on');
+            hideErr();
+            document.getElementById('fi').value = '';
+            result = null;
+        });
+
+        // ================================================================
+        // UI helpers
+        // ================================================================
+        function setProg(txt, pct) {
+            document.getElementById('pg').classList.add('on');
+            document.getElementById('pgtxt').textContent = txt;
+            document.getElementById('pgfill').style.width = pct + '%';
+        }
+        function showErr(msg) {
+            document.getElementById('errdiv').classList.add('on');
+            document.getElementById('errtxt').textContent = msg;
+            document.getElementById('pg').classList.remove('on');
+        }
+        function hideErr() { document.getElementById('errdiv').classList.remove('on'); }
+        function fmtTime(s) { return `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`; }
+        function fmtSize(b) { return b < 1048576 ? (b / 1024).toFixed(1) + ' KB' : (b / 1048576).toFixed(1) + ' MB'; }
+        function dlFile(content, name, type) {
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(new Blob([content], { type }));
+            a.download = name; a.click();
+        }
+
+        // ================================================================
+        // Drop / File events
+        // ================================================================
+        const dz = document.getElementById('dz'), fi = document.getElementById('fi');
+        // label[for=fi]이므로 클릭은 브라우저가 자동 처리 — onclick 불필요
+        dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('over') });
+        dz.addEventListener('dragleave', () => dz.classList.remove('over'));
+        dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('over'); const f = e.dataTransfer.files[0]; if (f) handleFile(f) });
+        fi.addEventListener('change', e => { const f = e.target.files[0]; if (f) handleFile(f) });
+    </script>
+</body>
+
+</html>
